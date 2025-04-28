@@ -42,26 +42,6 @@
         "type": "github"
       }
     },
-    "khal-git": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1735792169,
-        "narHash": "sha256-Gx2z669wlaDQsTSz8aT3ijg1wf/pzrWEr4gBVerOclg=",
-        "owner": "JBlocklove",
-        "repo": "khal-git-flake",
-        "rev": "9407490e5d50cf9ea5bb6201854b6dd97abef1d8",
-        "type": "github"
-      },
-      "original": {
-        "owner": "JBlocklove",
-        "repo": "khal-git-flake",
-        "type": "github"
-      }
-    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1744932701,
@@ -82,7 +62,6 @@
       "inputs": {
         "firefox-addons": "firefox-addons",
         "home-manager": "home-manager",
-        "khal-git": "khal-git",
         "nixpkgs": "nixpkgs"
       }
     }

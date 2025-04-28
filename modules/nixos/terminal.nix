@@ -15,7 +15,7 @@
 	  	tmux
 		bat
 		procs
-		inputs."khal-git".packages."x86_64-linux"."khal-git"
+		#inputs."khal-git".packages."x86_64-linux"."khal-git"
     ];
   };
 }
