@@ -1,0 +1,52 @@
+#!/run/current-system/sw/bin/bash
+
+# Location of mbsyncrc and maildir root
+MBSYNCRC="$HOME/.config/isync/mbsyncrc"
+MAILDIR="$HOME/.local/share/mail"
+LASTRUN="$HOME/.local/share/mail/.mailsynclastrun"
+
+# Ensure last run file exists
+touch "$LASTRUN"
+
+# Use notify-send if available
+notify() {
+    command -v dunstify >/dev/null && dunstify " $1" "$2 new emails"
+}
+
+# Sync a single account and notify if new mail exists
+sync_account() {
+    local account="$1"
+    mbsync -c "$MBSYNCRC" "$account"
+	notmuch new
+
+    # Look for new messages in common inbox paths
+    local inboxes=("$MAILDIR/$account/INBOX/new" "$MAILDIR/$account/Inbox/new" "$MAILDIR/$account/inbox/new")
+    local count=0
+
+    for inbox in "${inboxes[@]}"; do
+        if [ -d "$inbox" ]; then
+            count=$((count + $(find "$inbox" -type f -newer "$LASTRUN" | wc -l)))
+        fi
+    done
+
+    if [ "$count" -gt 0 ]; then
+        notify "$account" "$count"
+    fi
+}
+
+# Get account list from mbsyncrc or arguments
+if [ "$#" -eq 0 ]; then
+    accounts=$(awk '/^Channel/ {print $2}' "$MBSYNCRC")
+else
+    accounts="$@"
+fi
+
+# Sync all accounts
+for account in $accounts; do
+    sync_account "$account" &
+done
+
+wait
+
+# Update last run time
+touch "$LASTRUN"

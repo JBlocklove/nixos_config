@@ -10,7 +10,14 @@
 		kicad
 		#kicadAddons
 		prusa-slicer
+		platformio
+		avrdude
     ];
+
+	services.udev.packages = with pkgs; [
+		platformio-core
+		openocd
+	];
   };
 }
 

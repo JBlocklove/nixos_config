@@ -1,0 +1,137 @@
+# vim: filetype=neomuttrc
+
+### ─── MOONLIGHT COLORS ─────────────────────────────────────────────────────
+
+# Index (mail‐list) colors
+color index         magenta		default 	'.*'
+color index_author  cyan       	default 	'.*'
+color index_number  magenta    	default
+color index_subject white      	default 	'.*'
+color index_date	blue		default
+
+
+# New mail = bold
+color index         brightmagenta   default "~N"
+color index_author  brightgreen		default "~N"
+color index_subject brightmagenta	default "~N"
+color index_date	brightblue		default	"~N"
+
+# Tagged mail = highlight
+color index          brightyellow	default   "~T"
+color index_author   brightred		default   "~T"
+color index_subject  brightwhite	default   "~T"
+
+# Aesthetic / misc
+mono               bold          bold
+mono               underline     underline
+mono               indicator     reverse
+mono               error         bold
+
+color normal				default			default
+color indicator				brightblack		cyan
+color sidebar_highlight		yellow			default
+color sidebar_divider		brightblack		default
+color sidebar_flagged		red         	default
+color sidebar_new			green       	default
+color error					red				default
+color tilde        			black         	default
+color message      			cyan          	default
+color markers      			red           	white
+color attachment   			white         	default
+color search       			brightmagenta	default
+color status       			brightgreen		default
+color hdrdefault   			brightgreen		default
+
+color quoted       yellow       default
+color quoted1      green        default
+color quoted2      blue         default
+color quoted3      cyan			default
+color quoted4      red          default
+color quoted5      brightred    default
+
+color signature    brightgreen   default
+color bold         black         default
+color underline    black         default
+
+# Header/body regex‐highlighting
+color header      brightmagenta default "^From"
+color header      brightcyan    default "^Subject"
+color header      brightwhite   default "^(CC|BCC)"
+color header      blue          default ".*"
+
+color body        brightred     default "[\\-\\.+_a-zA-Z0-9]+@[\\-\\.a-zA-Z0-9]+"
+color body        brightblue    default "(https?|ftp)://[\\-\\.,/%~_:?&=\\#a-zA-Z0-9]+"
+color body		  green			default "\`[^\`]*\`"
+color body        brightblue    default "^# \\.*"
+color body        brightcyan    default "^## \\.*"
+color body        brightgreen   default "^### \\.*"
+color body        yellow        default "^(\\t| )*(-|\\\\*) \\.*"
+color body        brightcyan    default "[;:][-o][)/(|]"
+color body        brightcyan    default "[;:][)(|]"
+color body        brightcyan    default "[ ][*][^*]*[*][ ]?"
+color body        brightcyan    default "[ ]?[*][^*]*[*][ ]"
+color body        red           default "(BAD signature)"
+color body        cyan          default "(Good signature)"
+color body        brightblack   default "^gpg: Good signature .*"
+color body        brightyellow  default "^gpg: "
+color body        brightyellow  red     "^gpg: BAD signature from.*"
+mono body         bold          "^gpg: Good signature"
+mono body         bold          "^gpg: BAD signature from.*"
+#color body        red           default "([a-z][a-z0-9+-]*://(((([a-z0-9_.!~*'();:&=+$,-]|%[0-9a-f][0-9a-f])*@)?((([a-z0-9]([a-z0-9-]*[a-z0-9])?)\\.)*([a-z]([a-z0-9-]*[a-z0-9])?)\\.?|[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+)(:[0-9]+)?)|([a-z0-9_.!~*'()$,;:@&=+-]|%[0-9a-f][0-9a-f])+)(/([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*(;([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*)*(/([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*(;([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*)*)*)?(\\?([a-z0-9_.!~*'();/?:@&=+$,-]|%[0-9a-f][0-9a-f])*)?(#([a-z0-9_.!~*'();/?:@&=+$,-]|%[0-9a-f][0-9a-f])*)?|(www|ftp)\\.(([a-z0-9]([a-z0-9-]*[a-z0-9])?)\\.)*([a-z]([a-z0-9-]*[a-z0-9])?)\\.?(:[0-9]+)?(/([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*(;([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*)*(/([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*(;([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*)*)*)?)?[^].,:;!)? \t\r\n<>\"]"
+
+### ─── FORMATTING & ICONIC LAYOUTS ────────────────────────────────────────────────
+
+# Date line in pager & index
+set date_format    = "%a %d %h %H:%M"
+
+# Index (message list) layout
+#set index_format   = "%zc %zs %zt | %-18.18L   %@attachment_info@  %-30.100s %> %?Y?%Y ? %(!%a %d %h %H:%M)"
+set index_format = "%zc %zs %zt | %-18.18L   %@attachment_info@ %s%*  %?Y?%Y ? %(!%a %d %h %H:%M)"
+
+# Pager header (when viewing a single message)
+set pager_format   = "%n | %T %s | %* |  %{!%d %b · %H:%M} | %?X? %X?%P"
+
+# Status‐bar (bottom line) layout
+set status_format  = " |%D| %?u?| %u| ?%?R?| %R| ?%?d?| %d| ?%?t?| %t| ?%?F?| %F| ?%?p?| %p|? %|─"
+
+# Compose‐mode header
+set compose_format = "-- NeoMutt: Compose  [Approx. msg size: %l   Atts: %a]%>-"
+
+# Attachment‐line format
+set attach_format  = "%u%D  %T%-75.75d %?T?   ? %5s · %m/%M"
+
+# Sidebar layout
+set sidebar_format = '%D%*'
+#set sidebar_format = '%D%?Z? [%Z]?%* %?S?%S?'
+
+# Hooks for showing “” and “” attachment icons
+## index-format-hook attachment_info '=B text/calendar ~X 1' ' '
+## index-format-hook attachment_info '=B text/calendar' "  "
+## index-format-hook attachment_info '~X 1' "  "
+## index-format-hook attachment_info '~A' "   "
+
+index-format-hook attachment_info '~X 1' ''
+index-format-hook attachment_info '~A' ' '
+
+# Don’t show the “+” marker on wrapped lines
+set markers = no
+
+set to_chars     = " "   # icons for To:, Cc:, lists, etc.
+set status_chars = " "      # icons for mailbox-changed/read-only/etc.
+ifdef crypt_chars set crypt_chars = " "
+set flag_chars   = "      "
+
+# hide trivial tags
+set hidden_tags = "unread,draft,flagged,passed,replied,attachment,signed,encrypted"
+
+# map tag-names to icons
+tag-transforms "replied"    "↻ "  \
+               "encrytpted" "" \
+               "signed"     "" \
+               "attachment" "" \
+
+# tell NeoMutt how the G-formats should look
+tag-formats    "replied"    "GR" \
+               "encrypted"  "GE" \
+               "signed"     "GS" \
+               "attachment" "GA"

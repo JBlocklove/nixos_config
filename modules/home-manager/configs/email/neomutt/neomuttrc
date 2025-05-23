@@ -1,0 +1,98 @@
+# vim: filetype=neomuttrc
+
+source ./style.muttrc
+source ./bindings.muttrc
+
+set mailcap_path = $HOME/.config/neomutt/mailcap:$mailcap_path
+
+## General settings
+set editor = 'nvim'
+
+set send_charset="us-ascii:utf-8"
+
+set mime_type_query_command = "file --mime-type -b %s"
+set count_alternatives = yes
+set thorough_search = no
+
+set date_format="%d/%m/%Y %H:%M"
+
+set sort='last-date'
+set use_threads=reverse
+set collapse_all = no
+set uncollapse_new = no
+set thread_received = yes
+set narrow_tree=no
+
+set smtp_authenticators = 'gssapi:login'
+set query_command = "khard email --parsable %s"
+set rfc2047_parameters = yes
+
+
+set sleep_time = 0		# Pause 0 seconds for informational messages
+set markers = no		# Disables the `+` displayed at line wraps
+set mark_old = no		# Unread mail stay unread until read
+
+set pager_read_delay = 2
+set auto_tag = no
+
+set mime_forward = no	# mail body is forwarded as text
+set forward_attachments = yes	# attachments are forwarded with mail
+set wait_key = no		# mutt won't ask "press key to continue"
+set fast_reply			# skip to compose when replying
+set fcc_attach			# save attachments with the body
+set forward_format = "Fwd: %s"	# format of subject when forwarding
+set forward_quote		# include message in forwards
+set reverse_name		# reply as whomever it was to
+set include			# include message in replies
+
+set mail_check = 60 # to avoid lags using IMAP with some email providers (yahoo for example)
+
+
+auto_view text/plain
+auto_view text/html		# automatically show html (mailcap uses lynx)
+auto_view application/pgp-encrypted
+alternative_order text/plain text/enriched text/html
+
+## Sidebar
+set sidebar_visible = no
+set sidebar_width = 20
+set sidebar_short_path = yes
+set sidebar_next_new_wrap = yes
+set mail_check_stats
+set sidebar_format = '%B%* %?N?[%N]? %?S?%S?'
+
+## Accounts
+source /home/jason/.config/neomutt/accounts/jason.blocklove@gmail.com.muttrc
+macro index,pager i1 '<sync-mailbox><enter-command>source /home/jason/.config/neomutt/accounts/jason.blocklove@gmail.com.muttrc<enter><change-folder>!<enter>;<check-stats>' "switch to jason.blocklove@gmail.com"
+macro index,pager i2 '<sync-mailbox><enter-command>source /home/jason/.config/neomutt/accounts/jmb9986@nyu.edu.muttrc<enter><change-folder>!<enter>;<check-stats>' "switch to jmb9986@nyu.edu"
+macro index,pager i3 '<sync-mailbox><enter-command>source /home/jason/.config/neomutt/accounts/jmb1997@comcast.net.muttrc<enter><change-folder>!<enter>;<check-stats>' "switch to jmb1997@comcast.net"
+#macro index,pager i4 '<sync-mailbox><enter-command>source /home/jason/.config/mutt/accounts/jason@blocklove.net.muttrc<enter><change-folder>!<enter>;<check-stats>' "switch to jason@blocklove.net"
+
+## Headers
+ignore *
+unignore to: cc:
+unhdr_order *
+hdr_order from: to: cc: date: subject:
+
+## View
+set allow_ansi
+set pager_index_lines = 10
+set pager_context = 3
+set pager_stop
+set menu_scroll
+set smart_wrap
+set wrap=90
+#set quote_regexp = "^( {0,4}[>|:#%]| {0,4}[a-z0-9]+[>|]+)+"
+#set reply_regexp = "^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*"
+#set display_filter="perl -0777pe 's/___{10,}[^_]*microsoft teams meeting.*to join the meeting<([^>]*).*(___{10,})/\\n────────────────────────────────────────────────────────────────────────\\n\\nTeams Meeting ~~\\n\\nMeeting URL:\\n$1\\n\\n────────────────────────────────────────────────────────────────────────/is'| sed 's/^\\(To\\|CC\\): \\([^<]*[^>]\\)$/\\1\:<\\2>/g' | perl -0777pe 's/(((?!.*CC:)To:|CC:).+?(?=>\\n)>)/$1!REMOVE_ME!\\n!END!/gs' | sed '/^To:/{;:l N;/!END!/b; s/\\(\\n\\|  *\\|\\t\\t*\\)/ /g; bl}' | sed '/^To:/,/>$/ s/\\([^>]*>,\\?\\)/\\1\\n/g' | sed -e 's/^ \\(CC:\\)\\(.*$\\)/\\1\\n\\2/' -e 's/^\\(To:\\)\\(.*$\\)/\\1 --------------------------------------------------------------------\\n\\2/' -e 's/^!END!$/------------------------------------------------------------------------/' -e '/!REMOVE_ME!/d' -e '/\\[-- Type: text.* --\\]/d' -e '/\\[-- Autoview.* --\\]/d' -e '/\\[-- Type.* --\\]/d' -e '/\\[-- .*unsupported.* --\\]/d' -e '/\\[-- Attachment #[0-9] --\\]/d' -e 's/Attachment #[0-9]: //g' -e '/./,/^$/!d' -e 's/\\([A-Z]*\\), *\\([A-Za-z]*\\)\\(\"\\)\\?/\\2 \\L\\u\\1\\E\\3/g'"
+
+## Notmuch
+set nm_query_type=threads                                   # bring in the whole thread instead of just the matched message, really useful
+set nm_default_url = "notmuch:///$HOME/.local/share/mail"   # default notmuch URL
+set nm_record_tags = "sent"                                 # default 'sent' tag
+set virtual_spoolfile=yes                                   # allow using virtual mailboxes as spoolfile
+macro index \Cg "<enter-command>unset wait_key<enter><shell-escape>read -p 'Enter a search: ' x; echo \$x >~/.cache/mutt_terms<enter><change-folder>All Accounts<enter><limit>~i \"\`notmuch --config ~/.config/notmuch/notmuchrc search --output=messages \$(/bin/cat ~/.cache/mutt_terms) | head -n 1000 | perl -le '@a=<>;chomp@a;s/\^id:// for@a;$,=\"|\";print@a' | sed 's/id://g' \`\"<enter>" "Search all mailboxes in all accounts (Global search)"
+
+## Etc?
+macro compose M "F pandoc -s -f markdown -t html …" "Convert from MD to HTML"
+macro attach P "|git-split-diffs --color | less -RF<enter>" …

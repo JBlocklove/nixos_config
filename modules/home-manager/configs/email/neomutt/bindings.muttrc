@@ -1,0 +1,83 @@
+# vim: filetype=neomuttrc
+
+macro index,pager a "<pipe-message>khard add-email<return>" "add the sender email address to khard"
+
+## Unbindings
+bind index q noop
+bind index,pager i noop
+bind index,pager g noop
+bind index \Cf noop
+bind index,pager M noop
+bind index,pager C noop
+bind editor <space> noop
+bind index h noop
+
+## General bindings
+bind index gg first-entry
+bind browser gg top-page
+bind pager gg top
+bind index G last-entry
+bind browser G bottom-page
+bind pager G bottom
+bind index j next-entry
+bind pager j next-line
+bind index k previous-entry
+bind pager k previous-line
+bind attach l view-mailcap
+bind index l display-message
+bind browser l select-entry
+bind pager l view-attachments
+macro browser h '<change-dir><kill-line>..<enter>' "Go to parent folder"
+bind pager,attach h exit
+
+bind index,pager R group-reply
+
+bind index L limit
+bind attach <return> view-mailcap
+bind index D delete-message
+bind index U undelete-message
+#bind index,query <space> tag-entry
+macro index,pager <space> "<pipe-message>notmuch tag +important -- id:%i<enter>" "Tag message as important with notmuch"
+bind index,pager H view-raw-message
+bind index,pager,browser d half-down
+bind index,pager,browser u half-up
+bind index,pager S sync-mailbox
+bind editor <Tab> complete-query
+
+## Mailbox bindings
+macro index,pager gi "<change-folder>=INBOX<enter>" "go to inbox"
+macro index,pager Mi ";<save-message>=INBOX<enter>" "move mail to inbox"
+macro index,pager Ci ";<copy-message>=INBOX<enter>" "copy mail to inbox"
+macro index,pager gd "<change-folder>=Drafts<enter>" "go to drafts"
+macro index,pager Md ";<save-message>=Drafts<enter>" "move mail to drafts"
+macro index,pager Cd ";<copy-message>=Drafts<enter>" "copy mail to drafts"
+macro index,pager gj "<change-folder>=Junk<enter>" "go to junk"
+macro index,pager Mj ";<save-message>=Junk<enter>" "move mail to junk"
+macro index,pager Cj ";<copy-message>=Junk<enter>" "copy mail to junk"
+macro index,pager gt "<change-folder>=Trash<enter>" "go to trash"
+macro index,pager Mt ";<save-message>=Trash<enter>" "move mail to trash"
+macro index,pager Ct ";<copy-message>=Trash<enter>" "copy mail to trash"
+macro index,pager gs "<change-folder>=Sent<enter>" "go to sent"
+macro index,pager Ms ";<save-message>=Sent<enter>" "move mail to sent"
+macro index,pager Cs ";<copy-message>=Sent<enter>" "copy mail to sent"
+macro index,pager ga "<change-folder>=Archive<enter>" "go to archive"
+macro index,pager Ma ";<save-message>=Archive<enter>" "move mail to archive"
+macro index,pager Ca ";<copy-message>=Archive<enter>" "copy mail to archive"
+
+bind index,pager \Cj next-entry
+bind index,pager \Ck previous-entry
+
+
+## Sorting
+bind index S sort-mailbox
+bind index s sort-reverse
+
+## Sidebar bindings
+bind index,pager B sidebar-toggle-visible
+bind index,pager K sidebar-prev
+bind index,pager J sidebar-next
+bind index,pager L sidebar-open
+
+macro index O "<shell-escape>mailsync<enter>" "run mbsync to collect all mail"
+
+bind index,pager \Ch sidebar-toggle-visible

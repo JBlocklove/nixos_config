@@ -1,0 +1,75 @@
+IMAPAccount jason.blocklove@gmail.com
+Host imap.gmail.com
+Port 993
+User jason.blocklove@gmail.com
+PassCmd "pass mutt/jason.blocklove@gmail.com"
+TLSType IMAPS
+AuthMechs LOGIN
+
+IMAPStore jason.blocklove@gmail.com-remote
+Account jason.blocklove@gmail.com
+
+MaildirStore jason.blocklove@gmail.com-local
+Path /home/jason/.local/share/mail/jason.blocklove@gmail.com/
+Inbox /home/jason/.local/share/mail/jason.blocklove@gmail.com/INBOX
+Flatten .
+
+Channel jason.blocklove@gmail.com
+Far :jason.blocklove@gmail.com-remote:
+Near :jason.blocklove@gmail.com-local:
+Patterns * !"[Gmail]/All Mail" !"*fts-flatcurve*" !"*virtual*"
+Create Both
+SyncState *
+MaxMessages 20000
+ExpireUnread no
+
+IMAPAccount jmb9986@nyu.edu
+Host imap.gmail.com
+Port 993
+User jmb9986@nyu.edu
+PassCmd "pass mutt/jmb9986@nyu.edu"
+TLSType IMAPS
+AuthMechs LOGIN
+
+IMAPStore jmb9986@nyu.edu-remote
+Account jmb9986@nyu.edu
+
+MaildirStore jmb9986@nyu.edu-local
+Path /home/jason/.local/share/mail/jmb9986@nyu.edu/
+Inbox /home/jason/.local/share/mail/jmb9986@nyu.edu/INBOX
+Flatten .
+
+Channel jmb9986@nyu.edu
+Far :jmb9986@nyu.edu-remote:
+Near :jmb9986@nyu.edu-local:
+Patterns * !"[Gmail]/All Mail" !"*fts-flatcurve*" !"*virtual*"
+Create Both
+SyncState *
+MaxMessages 20000
+ExpireUnread no
+
+IMAPAccount jmb1997@comcast.net
+Host imap.comcast.net
+Port 993
+User jmb1997@comcast.net
+PassCmd "pass mutt/jmb1997@comcast.net"
+TLSType IMAPS
+AuthMechs LOGIN
+
+IMAPStore jmb1997@comcast.net-remote
+Account jmb1997@comcast.net
+
+MaildirStore jmb1997@comcast.net-local
+Path /home/jason/.local/share/mail/jmb1997@comcast.net/
+Inbox /home/jason/.local/share/mail/jmb1997@comcast.net/INBOX
+Flatten .
+
+Channel jmb1997@comcast.net
+Far :jmb1997@comcast.net-remote:
+Near :jmb1997@comcast.net-local:
+Patterns * !"[Gmail]/All Mail" !"*fts-flatcurve*" !"*virtual*"
+Create Both
+SyncState *
+MaxMessages 20000
+ExpireUnread no
+

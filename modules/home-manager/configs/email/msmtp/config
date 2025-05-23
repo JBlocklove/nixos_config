@@ -1,0 +1,28 @@
+defaults
+auth on
+tls	on
+tls_trust_file /etc/ssl/certs/ca-certificates.crt
+tls_starttls off
+logfile ~/.local/share/msmtp.log
+
+account jason.blocklove@gmail.com
+host smtp.gmail.com
+port 465
+from jason.blocklove@gmail.com
+user jason.blocklove@gmail.com
+passwordeval "pass mutt/jason.blocklove@gmail.com"
+
+account jmb9986@nyu.edu
+host smtp.gmail.com
+port 465
+from jmb9986@nyu.edu
+user jmb9986@nyu.edu
+passwordeval "pass mutt/jmb9986@nyu.edu"
+
+account jmb1997@comcast.net
+host smtp.comcast.net
+port 465
+from jmb1997@comcast.net
+user jmb1997@comcast.net
+passwordeval "pass mutt/jmb1997@comcast.net"
+

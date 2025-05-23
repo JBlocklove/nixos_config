@@ -9,6 +9,11 @@
 		signal-desktop
 		vesktop
 		slack
+		#neomutt
+		#notmuch
+		#isync
+		#msmtp
+		khard
     ];
   };
 }

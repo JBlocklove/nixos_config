@@ -1,0 +1,17 @@
+text/plain; nvim %s;
+text/html; firefox %s &; nametemplate=%s.html
+text/html; w3m -I %{charset} -T text/html; copiousoutput;
+text/calendar; khal import %s;
+text/csv; sc-im %s;
+text/*; nvim %s;
+image/*; sxiv %s &;
+video/*; setsid mpv --quiet %s &; copiousoutput
+application/pdf; zathura %s &;
+application/pgp-encrypted; gpg -d '%s'; copiousoutput;
+application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; libreoffice %s &; copiousoutput;
+application/vnd.openxmlformats-officedocument.wordprocessingml.document; libreoffice %s &; copiousoutput;
+application/vnd.oasis.opendocument.spreadsheet; libreoffice %s &; copiousoutput;
+application/msword; libreoffice %s &; copiousoutput;
+application/octet-stream; nvim %s;
+application/ics; khal import %s;
+application/*; nvim %s;

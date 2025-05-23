@@ -14,26 +14,34 @@
 		}];}
 
 		(lib.mkIf (config.hypr.enable || config.river.enable) {
-			environment.systemPackages = [
-				pkgs.hyprlock
-				pkgs.hypridle
-				pkgs.waybar
-				pkgs.dunst
-				(pkgs.flameshot.override { enableWlrSupport = true; })
-				pkgs.grim
+			environment.systemPackages = with pkgs; [
+				hyprlock
+				hypridle
+				waybar
+				dunst
+				grim
+				slurp
+				swappy
+				eww
 			];
 		})
 		(lib.mkIf config.hypr.enable {
-			environment.systemPackages = [
-				pkgs.hyprland
-				pkgs.hyprcursor
-				pkgs.nwg-look
-				pkgs.catppuccin-cursors.mochaDark
-				pkgs.lxappearance
+			environment.systemPackages = with pkgs; [
+				hyprland
+				hyprcursor
+				hyprpaper
+				nwg-look
+				catppuccin-cursors.mochaDark
+				lxappearance
 			];
 			programs.hyprland.enable = true;
 			programs.hyprland.withUWSM = true;
 			programs.hyprland.xwayland.enable = true;
+			xdg.portal = {
+				extraPortals = [
+					pkgs.xdg-desktop-portal-hyprland
+				];
+			};
 		})
 		(lib.mkIf config.river.enable {
 			environment.systemPackages = [
