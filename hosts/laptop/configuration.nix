@@ -23,7 +23,18 @@
 			"resume=/dev/disk/by-uuid/01962e0a-0daa-4750-a10d-366614a738d6"
 		];
 
+		kernelModules = [
+			"thunderbolt"
+			"usbcore"
+			"usbhid"
+		];
+
 	};
+
+	services.udev.extraRules = ''
+		# Thunderbolt authorization (if needed)
+		ACTION=="add", SUBSYSTEM=="thunderbolt", ATTR{authorized}=="0", ATTR{authorized}="1"
+	'';
 
 	networking.hostName = "mirkwood"; # Define your hostname.
 
@@ -160,26 +171,6 @@
 	'';
 
 
-	systemd.user.services.mopidy = {
-		description = "Mopidy user service";
-		after = [ "network-online.target" ];
-		wantedBy = [ "default.target" ];
-		serviceConfig = {
-			Type = "simple";
-
-			ExecStart = ''
-				${pkgs.nix}/bin/nix-shell \
-				-p ${pkgs.mopidy} \
-				${pkgs.mopidy-mpd} \
-				${pkgs.mopidy-jellyfin} \
-				--run "mopidy"
-				'';
-			Restart = "on-failure";
-
-			Environment = "XDG_CONFIG_HOME=%h/.config";
-		};
-	};
-
 	powerManagement.enable = true;
 	services.thermald.enable = true;
 
@@ -237,5 +228,19 @@
 		"-a always,exit -F arch=b64 -S mkdir,mkdirat -F dir=/home/jason -k home_mkdir"
 	];
 	services.journald.audit = true;
+
+	services.printing = {
+		enable = true;
+		browsing = true;
+		drivers = with pkgs; [
+			gutenprint
+			hplipWithPlugin
+		];
+	};
+	services.avahi = {
+		enable = true;
+		nssmdns4 = true;
+		openFirewall = true;
+	};
 
 }

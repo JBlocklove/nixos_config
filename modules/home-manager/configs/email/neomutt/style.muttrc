@@ -119,7 +119,7 @@ set markers = no
 set to_chars     = " "   # icons for To:, Cc:, lists, etc.
 set status_chars = " "      # icons for mailbox-changed/read-only/etc.
 ifdef crypt_chars set crypt_chars = " "
-set flag_chars   = "      "
+set flag_chars   = " 󰧬 󰻨  "
 
 # hide trivial tags
 set hidden_tags = "unread,draft,flagged,passed,replied,attachment,signed,encrypted"

@@ -1,0 +1,4 @@
+[manager]
+prepend_keymap = [
+	{ on = [ "b", "w" ], run = [ 'shell -- hyprctl hyprpaper reload ,"$0"' ], desc = "Set file as wallpaper" },
+]
