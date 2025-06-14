@@ -10,17 +10,17 @@ in {
 		#mpc
 	];
 
-	#services.mopidy = {
-	#	enable = true;
-	#	extensionPackages = with pkgs; [
-	#		mopidy-mpd
-	#		mopidy-jellyfin
-	#		mopidy-local
-	#	];
-	#	extraConfigFiles = [
-	#		"${musicConfigs}/mopidy/mopidy.conf"
-	#	];
-	#};
+	services.mopidy = {
+		enable = true;
+		extensionPackages = with pkgs; [
+			mopidy-mpd
+			mopidy-jellyfin
+			mopidy-local
+		];
+		extraConfigFiles = [
+			"${musicConfigs}/mopidy/mopidy.conf"
+		];
+	};
 
 	#systemd.user.services.mopidy = {
 	#	Unit = {
@@ -50,16 +50,16 @@ in {
 
 
 
-	#home.file = {
-	#	".config/mopidy/" = {
-	#		source = "${musicConfigs}/mopidy/";
-	#		recursive = true;
-	#	};
+	home.file = {
+		#".config/mopidy/" = {
+		#	source = "${musicConfigs}/mopidy/";
+		#	recursive = true;
+		#};
 
-	#	".config/ncmpcpp/" = {
-	#		source = "${musicConfigs}/ncmpcpp/";
-	#		recursive = true;
-	#	};
+		".config/ncmpcpp/" = {
+			source = "${musicConfigs}/ncmpcpp/";
+			recursive = true;
+		};
 
-	#};
+	};
 }
