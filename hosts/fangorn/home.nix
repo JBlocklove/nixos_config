@@ -8,7 +8,7 @@
 		../../modules/home-manager/productivity.nix
 		../../modules/home-manager/term-utils.nix
 		../../modules/home-manager/writing.nix
-		../../modules/home-manager/programming.nix
+		../../modules/home-manager/development.nix
 		../../modules/home-manager/media-management.nix
 	];
 
