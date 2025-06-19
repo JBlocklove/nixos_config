@@ -36,7 +36,14 @@
 			nix-index
 			w3m
 			sops
+			nix-output-monitor
+			nvd
+			nh
 		];
+
+		environment.sessionVariables = {
+			FLAKE = "/home/jason/nixos";
+		};
 
 		programs.gnupg.agent.enable = true;
 

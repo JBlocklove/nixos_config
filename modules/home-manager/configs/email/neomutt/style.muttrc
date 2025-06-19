@@ -101,8 +101,7 @@ set compose_format = "-- NeoMutt: Compose  [Approx. msg size: %l   Atts: %a]%>-"
 set attach_format  = "%u%D  %T%-75.75d %?T?   ? %5s · %m/%M"
 
 # Sidebar layout
-set sidebar_format = '%D%*'
-#set sidebar_format = '%D%?Z? [%Z]?%* %?S?%S?'
+set sidebar_format = '%B%* %<N?|%N|>'
 
 # Hooks for showing “” and “” attachment icons
 ## index-format-hook attachment_info '=B text/calendar ~X 1' ' '

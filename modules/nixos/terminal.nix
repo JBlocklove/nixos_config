@@ -4,8 +4,10 @@
     term.enable = lib.mkEnableOption "enables my usual terminal programs";
   };
 
-  config = lib.mkIf config.engineering.enable {
+  config = lib.mkIf config.term.enable {
     environment.systemPackages = with pkgs; [
+		alacritty
+		alacritty.terminfo
 		khard
 		vdirsyncer
 		ranger

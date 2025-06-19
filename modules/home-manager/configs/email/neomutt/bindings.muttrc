@@ -64,10 +64,6 @@ macro index,pager ga "<change-folder>=Archive<enter>" "go to archive"
 macro index,pager Ma ";<save-message>=Archive<enter>" "move mail to archive"
 macro index,pager Ca ";<copy-message>=Archive<enter>" "copy mail to archive"
 
-bind index,pager \Cj next-entry
-bind index,pager \Ck previous-entry
-
-
 ## Sorting
 bind index S sort-mailbox
 bind index s sort-reverse
@@ -79,5 +75,3 @@ bind index,pager J sidebar-next
 bind index,pager L sidebar-open
 
 macro index O "<shell-escape>mailsync<enter>" "run mbsync to collect all mail"
-
-bind index,pager \Ch sidebar-toggle-visible

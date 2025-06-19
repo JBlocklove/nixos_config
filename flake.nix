@@ -24,18 +24,18 @@
 			pkgs = nixpkgs.legacyPackages.${system};
 
 		in{
-			nixosConfigurations.desktop = nixpkgs.lib.nixosSystem {
+			nixosConfigurations.fangorn = nixpkgs.lib.nixosSystem {
 				specialArgs = {inherit inputs;};
 				modules = [
-					./hosts/desktop/configuration.nix
+					./hosts/fangorn/configuration.nix
 					inputs.home-manager.nixosModules.default
 				];
 			};
 
-			nixosConfigurations.laptop = nixpkgs.lib.nixosSystem {
+			nixosConfigurations.mirkwood = nixpkgs.lib.nixosSystem {
 				specialArgs = {inherit inputs;};
 				modules = [
-					./hosts/laptop/configuration.nix
+					./hosts/mirkwood/configuration.nix
 					inputs.home-manager.nixosModules.default
 				];
 			};

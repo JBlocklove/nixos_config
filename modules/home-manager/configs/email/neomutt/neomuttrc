@@ -54,12 +54,11 @@ auto_view application/pgp-encrypted
 alternative_order text/plain text/enriched text/html
 
 ## Sidebar
-set sidebar_visible = no
-set sidebar_width = 20
+set sidebar_visible = yes
+set sidebar_width = 15
 set sidebar_short_path = yes
 set sidebar_next_new_wrap = yes
 set mail_check_stats
-set sidebar_format = '%B%* %?N?[%N]? %?S?%S?'
 
 ## Accounts
 source /home/jason/.config/neomutt/accounts/jason.blocklove@gmail.com.muttrc
