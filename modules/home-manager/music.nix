@@ -41,7 +41,7 @@ in {
 
 	sops.secrets = {
 		mopidy-config = {
-			sopsFile = "${prodConfigs}/music/mopidy.conf";
+			sopsFile = "${musicConfigs}/music/mopidy.conf";
 			format = "binary";
 			path = "${config.home.homeDirectory}/.config/mopidy/mopidy.conf";
 			mode = "0400";
