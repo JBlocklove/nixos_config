@@ -41,25 +41,25 @@
 		};
 
 
-		systemd.user.services.mopidy = {
-			description = "Mopidy user service";
-			after = [ "network-online.target" ];
-			wantedBy = [ "default.target" ];
-			serviceConfig = {
-				Type = "simple";
+		#systemd.user.services.mopidy = {
+		#	description = "Mopidy user service";
+		#	after = [ "network-online.target" ];
+		#	wantedBy = [ "default.target" ];
+		#	serviceConfig = {
+		#		Type = "simple";
 
-				ExecStart = ''
-					${pkgs.nix}/bin/nix-shell \
-					-p ${pkgs.mopidy} \
-					${pkgs.mopidy-mpd} \
-					${pkgs.mopidy-jellyfin} \
-					--run "mopidy"
-					'';
-				Restart = "on-failure";
+		#		ExecStart = ''
+		#			${pkgs.nix}/bin/nix-shell \
+		#			-p ${pkgs.mopidy} \
+		#			${pkgs.mopidy-mpd} \
+		#			${pkgs.mopidy-jellyfin} \
+		#			--run "mopidy"
+		#			'';
+		#		Restart = "on-failure";
 
-				Environment = "XDG_CONFIG_HOME=%h/.config";
-			};
-		};
+		#		Environment = "XDG_CONFIG_HOME=%h/.config";
+		#	};
+		#};
 
 	};
 }

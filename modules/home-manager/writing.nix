@@ -9,7 +9,7 @@ in
 # install packages  #
 #####################
 	home.packages = with pkgs; [
-		neovim
+		# neovim
 		texliveFull
 	];
 

@@ -92,7 +92,7 @@ set index_format = "%zc %zs %zt | %-18.18L   %@attachment_info@ %s%*  %?Y?%Y ? %
 set pager_format   = "%n | %T %s | %* |  %{!%d %b · %H:%M} | %?X? %X?%P"
 
 # Status‐bar (bottom line) layout
-set status_format  = " |%D| %?u?| %u| ?%?R?| %R| ?%?d?| %d| ?%?t?| %t| ?%?F?| %F| ?%?p?| %p|? %|─"
+set status_format  = " |%D| %?u?|󰧬 %u| ?%?R?| %R| ?%?d?| %d| ?%?t?| %t| ?%?F?| %F| ?%?p?| %p|? %|─"
 
 # Compose‐mode header
 set compose_format = "-- NeoMutt: Compose  [Approx. msg size: %l   Atts: %a]%>-"
@@ -101,7 +101,7 @@ set compose_format = "-- NeoMutt: Compose  [Approx. msg size: %l   Atts: %a]%>-"
 set attach_format  = "%u%D  %T%-75.75d %?T?   ? %5s · %m/%M"
 
 # Sidebar layout
-set sidebar_format = '%B%* %<N?|%N|>'
+set sidebar_format = ' %B%* %<N?󰧬 >'
 
 # Hooks for showing “” and “” attachment icons
 ## index-format-hook attachment_info '=B text/calendar ~X 1' ' '

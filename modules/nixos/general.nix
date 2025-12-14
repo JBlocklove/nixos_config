@@ -20,7 +20,7 @@
 			pass
 			nodejs #need npm for lsp in nvim
 			yarn
-			rofi-wayland
+			rofi
 			wl-clipboard
 			imagemagick
 			sxiv
@@ -39,13 +39,15 @@
 			nix-output-monitor
 			nvd
 			nh
+			libsecret
 		];
 
 		environment.sessionVariables = {
-			FLAKE = "/home/jason/nixos";
+			NH_FLAKE = "/home/jason/nixos";
 		};
 
 		programs.gnupg.agent.enable = true;
+		services.passSecretService.enable = true;
 
 		services.flatpak.enable = true;
 

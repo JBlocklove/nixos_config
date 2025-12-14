@@ -73,7 +73,7 @@
 	users.users.jason = {
 		isNormalUser = true;
 		description = "Jason";
-		extraGroups = [ "networkmanager" "wheel" "video" "audio" ];
+		extraGroups = [ "networkmanager" "wheel" "video" "audio" "dialout" ];
 		packages = with pkgs; [];
 	};
 
@@ -85,10 +85,12 @@
 	# List packages installed in system profile. To search, run:
 	# $ nix search wget
 	environment.systemPackages = with pkgs; [
-		neovim
+		#neovim
+		inputs.catvim.packages.${stdenv.hostPlatform.system}.default
 		wget
 		git
 		alacritty
+		alacritty.terminfo
 		firefox
 		zsh
 		stow
@@ -108,10 +110,10 @@
 
 
 
-	programs.neovim = {
-		enable = true;
-		defaultEditor = true;
-	};
+	#programs.neovim = {
+	#	enable = true;
+	#	defaultEditor = true;
+	#};
 
 	programs.zsh.enable = true;
 	users.defaultUserShell = pkgs.zsh;
@@ -128,6 +130,7 @@
 	engineering.enable = true;
 	term.enable = true;
 	audio.enable = true;
+	xilinx.enable = true;
 
 
 	security.sudo = {
@@ -150,20 +153,21 @@
 			groups = [ "wheel" ];
 		}];
 		extraConfig = with pkgs; ''
-			Defaults:picloud secure_path="${lib.makeBinPath [
-				systemd
-			]}:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin"
+			# keep your secure_path for user “picloud”
+    		Defaults:picloud secure_path="${lib.makeBinPath [ systemd ]}:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin"
+
+    		# preserve X11 / Wayland env so GUI apps can connect to your display
+    		Defaults env_keep += "DISPLAY XAUTHORITY XDG_RUNTIME_DIR WAYLAND_DISPLAY WAYLAND_SOCKET"
 		'';
 	};
 
 	system.stateVersion = "24.11";
 
 	services.logind = {
-		lidSwitch = "suspend-then-hibernate";
-		lidSwitchExternalPower = "suspend-then-hibernate";
-		extraConfig = ''
-			HandleLidSwitch=suspend-then-hibernate
-		'';
+		settings.Login = {
+			HandleLidSwitch = "suspend-then-hibernate";
+			HandleLidSwitchExternalPower = "suspend-then-hibernate";
+		};
 	};
 
 	systemd.sleep.extraConfig = ''
@@ -172,22 +176,24 @@
 
 
 	powerManagement.enable = true;
+	powerManagement.powertop.enable = true;
+
 	services.thermald.enable = true;
 
 	services.tlp = {
 		enable = true;
-		settings = {
-			CPU_SCALING_GOVERNOR_ON_AC = "performance";
-			CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+		#settings = {
+		#	CPU_SCALING_GOVERNOR_ON_AC = "performance";
+		#	CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
 
-			CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
-			CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
+		#	CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
+		#	CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
 
-			#Optional helps save long term battery health
-			START_CHARGE_THRESH_BAT0 = 40; # 40 and below it starts to charge
-			STOP_CHARGE_THRESH_BAT0 = 90; # 80 and above it stops charging
+		#	#Optional helps save long term battery health
+		#	START_CHARGE_THRESH_BAT0 = 40; # 40 and below it starts to charge
+		#	STOP_CHARGE_THRESH_BAT0 = 90; # 80 and above it stops charging
 
-		};
+		#};
 	};
 
 	programs.light.enable = true;

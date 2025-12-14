@@ -13,6 +13,8 @@ in
 		yaziPlugins.git
 		#yaziPlugins.glow
 		#yaziPlugins.piper
+		handlr-regex
+		mimeo
 	];
 
 #######################################
@@ -21,6 +23,20 @@ in
 	home.file = {
 		".config/yazi/" = {
 			source = "${termConfigs}/yazi/";
+			recursive = true;
+		};
+	};
+
+	home.file = {
+		".config/handlr/" = {
+			source = "${termConfigs}/handlr/";
+			recursive = true;
+		};
+	};
+
+	home.file = {
+		".config/mimeo/" = {
+			source = "${termConfigs}/mimeo/";
 			recursive = true;
 		};
 	};

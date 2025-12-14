@@ -33,6 +33,8 @@
           tridactyl
           ublock-origin
           youtube-shorts-block
+		  tab-session-manager
+		  darkreader
         ];
 
       # — userChrome.css

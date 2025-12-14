@@ -5,61 +5,64 @@ let
 in {
 
 	home.packages = with pkgs; [
-		#jellyfin-tui
-		#ncmpcpp
-		#mpc
+		ncmpcpp
+		mpc
+		picard
+		chromaprint
+		sshfs
+		yt-dlp
 	];
 
-	#services.mopidy = {
-	#	enable = true;
-	#	extensionPackages = with pkgs; [
-	#		mopidy-mpd
-	#		mopidy-jellyfin
-	#		mopidy-local
-	#	];
-	#	extraConfigFiles = [
-	#		"${musicConfigs}/mopidy/mopidy.conf"
-	#	];
-	#};
+	services.mopidy = {
+		enable = true;
+		extensionPackages = with pkgs; [
+			mopidy-mpd
+			mopidy-jellyfin
+			mopidy-local
+		];
+	};
 
-	#systemd.user.services.mopidy = {
-	#	Unit = {
-	#		Description = "Mopidy user service";
-	#		After = [ "network-online.target" ];
-	#	};
+	systemd.user.services.fix-mopidy = {
+		Unit = {
+			Description = "Runs 1 second of silence in Mopidy to fix a glitch";
+			Requires = [ "mopidy.service" ];
+		};
 
-	#	Install = {
-	#		WantedBy = [ "default.target" ];
-	#	};
+		Install = {
+			WantedBy = [ "multi-user.target" ];
+		};
 
-	#	Service = {
-	#		Type = "simple";
+		Service = {
+			Type = "oneshot";
+			ExecStart = "/home/jason/.config/mopidy/fix_mopidy.sh";
+			Restart = "on-failure";
+		};
+	};
 
-	#		ExecStart = ''
-	#			${pkgs.nix}/bin/nix-shell \
-	#			-p ${pkgs.mopidy} \
-	#			${pkgs.mopidy-mpd} \
-	#			${pkgs.mopidy-jellyfin} \
-	#			--run "mopidy"
-	#			'';
-	#		Restart = "on-failure";
+	sops.secrets = {
+		mopidy-config = {
+			sopsFile = "${prodConfigs}/music/mopidy.conf";
+			format = "binary";
+			path = "${config.home.homeDirectory}/.config/mopidy/mopidy.conf";
+			mode = "0400";
+		};
+	};
 
-	#		Environment = "XDG_CONFIG_HOME=%h/.config";
-	#	};
-	#};
+	home.file = {
+		# ".config/mopidy/" = {
+		# 	source = "${musicConfigs}/mopidy/";
+		# 	recursive = true;
+		# };
 
+		".config/ncmpcpp/" = {
+			source = "${musicConfigs}/ncmpcpp/";
+			recursive = true;
+		};
 
+		#".config/MusicBrainz/" = {
+		#	source = "${musicConfigs}/picard/";
+		#	recursive = true;
+		#};
 
-	#home.file = {
-	#	".config/mopidy/" = {
-	#		source = "${musicConfigs}/mopidy/";
-	#		recursive = true;
-	#	};
-
-	#	".config/ncmpcpp/" = {
-	#		source = "${musicConfigs}/ncmpcpp/";
-	#		recursive = true;
-	#	};
-
-	#};
+	};
 }

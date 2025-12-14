@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }: {
+{ inputs, config, pkgs, lib, ... }: {
 
 	options = {
 		hypr.enable = lib.mkEnableOption "Enable Hyprland WM";
@@ -33,6 +33,7 @@
 				nwg-look
 				catppuccin-cursors.mochaDark
 				lxappearance
+				inputs.hyprdynamicmonitors.packages.${stdenv.hostPlatform.system}.default
 			];
 			programs.hyprland.enable = true;
 			programs.hyprland.withUWSM = true;
@@ -41,6 +42,9 @@
 				extraPortals = [
 					pkgs.xdg-desktop-portal-hyprland
 				];
+			};
+			services.upower = {
+				enable = true;
 			};
 		})
 		(lib.mkIf config.river.enable {

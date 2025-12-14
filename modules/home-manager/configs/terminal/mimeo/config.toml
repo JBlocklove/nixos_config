@@ -1,0 +1,16 @@
+# Default handler for text files
+[handlers."text/plain"]
+cmd = ["alacritty", "-e", "nvim", "{url}"]
+
+# Default handler for PDFs
+[handlers."*.pdf"]
+cmd = ["zathura", "{url}"]
+
+# You can also match by file extension
+[handlers."*.md"]
+cmd = ["alacritty", "-e", "nvim", "{url}"]
+
+# Fallback/default handler (optional)
+[default]
+cmd = ["alacritty", "-e", "nvim", "{url}"]
+

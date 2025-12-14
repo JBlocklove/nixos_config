@@ -1,7 +1,18 @@
 keys:
   - &primary age1ck462ffam9hzaxfultff4jd3kkmwllp07lfcs8zj22nvmjp0yacqgazd93
 creation_rules:
-  - path_regex: secrets/secrets.yaml$
+  - path_regex: modules/home-manager/configs/productivity/vdirsyncer/config$
     key_groups:
-    - age:
-      - *primary
+      - age:
+        - *primary
+    #encrypted_regex: '^(client_id|client_secret)$'
+    
+  - path_regex: modules/home-manager/configs/productivity/khal/config$
+    key_groups:
+      - age:
+        - *primary
+
+  - path_regex: modules/home-manager/configs/music/mopidy/mopidy.conf$
+    key_groups:
+      - age:
+        - *primary

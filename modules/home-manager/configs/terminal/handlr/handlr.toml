@@ -1,0 +1,24 @@
+[default-applications]
+# File managers
+"inode/directory" = ["alacritty -e yazi"]
+
+# Text files
+"text/plain" = ["alacritty -e nvim"]
+
+# Images
+"image/png"  = ["imv"]
+"image/jpeg" = ["imv"]
+"image/gif"  = ["imv"]
+
+# Audio + Video
+"audio/*" = ["mpv"]
+"video/*" = ["mpv"]
+
+# PDF
+"application/pdf" = ["zathura"]
+
+# Archives
+"application/zip" = ["file-roller"]
+"application/x-tar" = ["file-roller"]
+"application/x-7z-compressed" = ["file-roller"]
+

@@ -12,6 +12,9 @@ in
 #####################
 	home.packages = with pkgs; [
 		calibre
+		vlc
+		unison
+		sshfs
 	];
 
 }

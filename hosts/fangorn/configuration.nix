@@ -169,27 +169,6 @@ services.openssh = {
 
 	system.stateVersion = "24.11"; # Did you read the comment?
 
-
-	#systemd.user.services.mopidy = {
-	#	description = "Mopidy user service";
-	#	after = [ "network-online.target" ];
-	#	wantedBy = [ "default.target" ];
-	#	serviceConfig = {
-	#		Type = "simple";
-
-	#		ExecStart = ''
-	#			${pkgs.nix}/bin/nix-shell \
-	#			-p ${pkgs.mopidy} \
-	#			${pkgs.mopidy-mpd} \
-	#			${pkgs.mopidy-jellyfin} \
-	#			--run "mopidy"
-	#			'';
-	#		Restart = "on-failure";
-
-	#		Environment = "XDG_CONFIG_HOME=%h/.config";
-	#	};
-	#};
-
 	services.printing = {
 		enable = true;
 		browsing = true;

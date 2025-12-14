@@ -17,25 +17,39 @@ in
 		khard
 		libreoffice
 	];
+#######################################
+# handle secrets in configs with sops #
+#######################################
+	sops.secrets = {
+		vdirsyncer-config = {
+			sopsFile = "${prodConfigs}/vdirsyncer/config";
+			format = "binary";
+			path = "${config.home.homeDirectory}/.config/vdirsyncer/config";
+			mode = "0400";
+		};
+
+		khal-config = {
+			sopsFile = "${prodConfigs}/khal/config";
+			format = "binary";
+			path = "${config.home.homeDirectory}/.config/khal/config";
+			mode = "0400";
+		};
+	};
+
 
 #######################################
 # symlink config files into ~/.config #
 #######################################
 	home.file = {
-		#".config/superProductivity/" = {
-		#	source = "${prodConfigs}/superProductivity/";
-		#	recursive = true;
-		#};
+		# ".config/vdirsyncer/" = {
+		# 	source = "${prodConfigs}/vdirsyncer/";
+		# 	recursive = true;
+		# };
 
-		".config/vdirsyncer/" = {
-			source = "${prodConfigs}/vdirsyncer/";
-			recursive = true;
-		};
-
-		".config/khal/" = {
-			source = "${prodConfigs}/khal/";
-			recursive = true;
-		};
+		# ".config/khal/" = {
+		# 	source = "${prodConfigs}/khal/";
+		# 	recursive = true;
+		# };
 
 		".config/khard/" = {
 			source = "${prodConfigs}/khard/";
@@ -51,7 +65,7 @@ in
 			};
 			Service = {
 				Type = "oneshot";
-				ExecStart = "/home/jason/.nix-profile/bin/vdirsyncer sync";
+				ExecStart = "${config.home.profileDirectory}/bin/vdirsyncer sync";
 			};
 			Install = {
 				WantedBy = [ "default.target" ];

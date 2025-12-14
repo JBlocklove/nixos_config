@@ -14,6 +14,16 @@
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
+		catvim = {
+			url = "path:/home/jason/repos/catvim";
+			flake = true;
+		};
+
+		hyprdynamicmonitors = {
+			url = "github:fiffeek/hyprdynamicmonitors";
+			flake = true;
+		};
+
 		sops-nix.url = "github:Mic92/sops-nix";
 
 	};

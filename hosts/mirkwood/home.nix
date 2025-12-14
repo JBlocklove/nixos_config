@@ -2,6 +2,7 @@
 
 {
 	imports = [
+		inputs.sops-nix.homeManagerModules.sops
 		../../modules/home-manager/firefox.nix
 		../../modules/home-manager/email.nix
 		../../modules/home-manager/music.nix
@@ -10,6 +11,7 @@
 		../../modules/home-manager/writing.nix
 		../../modules/home-manager/development.nix
 		../../modules/home-manager/media-management.nix
+		../../modules/home-manager/academics.nix
 	];
 
 	home.username = "jason";
@@ -32,6 +34,8 @@
 		documents = "${config.home.homeDirectory}/documents";
 		download = "${config.home.homeDirectory}/downloads";
 	};
+
+	sops.age.keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
 
 	programs.home-manager.enable = true;
 }
