@@ -9,8 +9,8 @@
         "plugins-vip": "plugins-vip"
       },
       "locked": {
-        "lastModified": 1765696139,
-        "narHash": "sha256-kBErlyB/5BAuKcsxMXyB4BUdTifcNbj/cvfcYDnKI1k=",
+        "lastModified": 1765809906,
+        "narHash": "sha256-5iLs0t/V8AdL+tY14dpUXMhXUOSHoUEgpHYQE48kFy4=",
         "path": "/home/jason/repos/catvim",
         "type": "path"
       },
@@ -27,11 +27,11 @@
       },
       "locked": {
         "dir": "pkgs/firefox-addons",
-        "lastModified": 1765685099,
-        "narHash": "sha256-D4VYn8NN0sLOzoo4geYDiV/T/Ilor78CaS50gNq6Ep0=",
+        "lastModified": 1765771449,
+        "narHash": "sha256-ZoHRPmTzwC1ndX3NQB/b/WKtU1WduAJdLI4j8eW/QFM=",
         "owner": "rycee",
         "repo": "nur-expressions",
-        "rev": "51712b3d3481dfaeef9a5f8b293ea1aa04a61cdb",
+        "rev": "5bcf9a2aeb4d361c2ff918a146b3fcc1e136b9ca",
         "type": "gitlab"
       },
       "original": {

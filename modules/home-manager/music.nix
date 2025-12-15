@@ -20,30 +20,31 @@ in {
 			mopidy-jellyfin
 			mopidy-local
 		];
+		extraConfigFiles = [ "${config.home.homeDirectory}/.config/mopidy/mopidy_secure.conf" ];
 	};
 
-	systemd.user.services.fix-mopidy = {
-		Unit = {
-			Description = "Runs 1 second of silence in Mopidy to fix a glitch";
-			Requires = [ "mopidy.service" ];
-		};
+	# systemd.user.services.fix-mopidy = {
+	# 	Unit = {
+	# 		Description = "Runs 1 second of silence in Mopidy to fix a glitch";
+	# 		Requires = [ "mopidy.service" ];
+	# 	};
 
-		Install = {
-			WantedBy = [ "multi-user.target" ];
-		};
+	# 	Install = {
+	# 		WantedBy = [ "multi-user.target" ];
+	# 	};
 
-		Service = {
-			Type = "oneshot";
-			ExecStart = "/home/jason/.config/mopidy/fix_mopidy.sh";
-			Restart = "on-failure";
-		};
-	};
+	# 	Service = {
+	# 		Type = "oneshot";
+	# 		ExecStart = "/home/jason/.config/mopidy/fix_mopidy.sh";
+	# 		Restart = "on-failure";
+	# 	};
+	# };
 
 	sops.secrets = {
 		mopidy-config = {
 			sopsFile = "${musicConfigs}/mopidy/mopidy.conf";
 			format = "binary";
-			path = "${config.home.homeDirectory}/.config/mopidy/mopidy.conf";
+			path = "${config.home.homeDirectory}/.config/mopidy/mopidy_secure.conf";
 			mode = "0400";
 		};
 	};
