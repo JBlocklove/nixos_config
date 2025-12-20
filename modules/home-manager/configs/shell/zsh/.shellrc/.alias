@@ -1,0 +1,33 @@
+# Aliases
+#
+
+alias nix-shell="nix-shell --run zsh"
+
+#alias ls="ls --color=auto -N"
+alias ls="lsd"
+
+# allow aliases in sudo
+alias sudo='sudo '
+
+# listing aliases
+alias la="lsd -A"
+alias ll="lsd -lhAr"
+alias lh="lsd -lah"
+
+alias tree="lsd --tree"
+
+# vim
+#alias vim="nvim"
+
+[[ "$DISTRO" != "Darwin" ]] && alias open="xdg-open &> /dev/null"
+
+# listing cd
+alias cd="cdls"
+
+alias py="python"
+
+bindkey '^R' history-incremental-search-backward
+
+alias yt-audio="youtube-dl -ic --extract-audio --audio-format mp3 --audio-quality 0"
+
+alias catvim="/home/jason/repos/catvim/result/bin/catvim"

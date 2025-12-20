@@ -12,6 +12,8 @@
 		../../modules/home-manager/development.nix
 		../../modules/home-manager/media-management.nix
 		../../modules/home-manager/academics.nix
+		../../modules/home-manager/shell.nix
+		../../modules/home-manager/utility.nix
 	];
 
 	home.username = "jason";
@@ -33,6 +35,9 @@
 		desktop = "${config.home.homeDirectory}/documents";
 		documents = "${config.home.homeDirectory}/documents";
 		download = "${config.home.homeDirectory}/downloads";
+		extraConfig = {
+			XDG_STATE_HOME = "${config.home.homeDirectory}/.local/state";
+		};
 	};
 
 	sops.age.keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";

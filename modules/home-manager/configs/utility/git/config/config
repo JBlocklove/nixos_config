@@ -1,0 +1,37 @@
+[user]
+	name = Jason Blocklove
+	email = jason.blocklove@gmail.com
+[core]
+	excludesfile = $XDG_CONFIG_HOME/git/gitignore
+	editor = nvim
+[alias]
+	ap = add -p
+	s = status
+	ci = commit
+	co = checkout
+	contrib = shortlog --summary --numbered
+	br = branch
+	l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+	lg = log -p
+	ll = log --pretty=oneline --graph --abbrev-commit
+    lm = log --pretty=format:'* %s (%h)'
+    su = log -n 8 --author='Jason Blocklove' --oneline
+[push]
+	default = simple
+[diff]
+	tool = vimdiff -d
+[merge]
+	tool = opendiff
+[help]
+	autocorrect = 1
+[pull]
+	rebase = false
+[http]
+	sslVerify = false
+[init]
+	defaultBranch = main
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

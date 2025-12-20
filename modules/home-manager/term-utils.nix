@@ -15,6 +15,8 @@ in
 		#yaziPlugins.piper
 		handlr-regex
 		mimeo
+		ranger
+		htop
 	];
 
 #######################################
@@ -37,6 +39,20 @@ in
 	home.file = {
 		".config/mimeo/" = {
 			source = "${termConfigs}/mimeo/";
+			recursive = true;
+		};
+	};
+
+	home.file = {
+		".config/ranger/" = {
+			source = "${termConfigs}/ranger/";
+			recursive = true;
+		};
+	};
+
+	home.file = {
+		".config/htop/" = {
+			source = "${termConfigs}/htop/";
 			recursive = true;
 		};
 	};

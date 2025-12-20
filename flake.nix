@@ -15,7 +15,7 @@
 		};
 
 		catvim = {
-			url = "path:/home/jason/repos/catvim";
+			url = "github:JBlocklove/catvim";
 			flake = true;
 		};
 

@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+PASSWORD_DIR=$HOME/.password-store
+
+show_passwords() {
+    echo -en "\0prompt\x1fPasswords\n"
+    find "$PASSWORD_DIR" -name '*.gpg' | sed "s#$PASSWORD_DIR/##;s/\.gpg$//"
+}
+
+copy_to_clipboard() {
+    local entry="$1"
+    pass show -c "$entry" >/dev/null
+}
+
+# Rofi invokes with no arguments to populate list
+if [[ $# -eq 0 ]]; then
+    show_passwords
+    exit 0
+fi
+
+# When Rofi sends back a selection, copy it to clipboard
+exec >/dev/null 2>&1
+copy_to_clipboard "$1"
+

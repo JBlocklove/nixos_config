@@ -9,8 +9,8 @@ in
 # install packages  #
 #####################
 	home.packages = with pkgs; [
-		# neovim
 		texliveFull
+		zathura
 	];
 
 #######################################

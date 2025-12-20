@@ -2,40 +2,43 @@
 
 let
 # adjust this relative path if you move the module
-termConfigs = ./configs/terminal;
+shellConfigs = ./configs/shell;
 in
 {
 #####################
 # install packages  #
 #####################
 	home.packages = with pkgs; [
-		zsh
 		tmux
 	];
 
-#####################################
+	programs.zsh = {
+		enable  = true;
+		# enableCompletion = true;
+		# autosuggestion.enable = true;
+		# syntaxHighlighting.enable = true;
+	};
+
+######################################
 # any environment vars you need     #
-#####################################
-## home.sessionVariables = {
-##   # if your pass store isn’t at ~/.password-store
-##   PASSWORD_STORE_DIR = "$HOME/.local/share/pass";
-## };
+######################################
+	home.sessionVariables = {
+		ZDOTDIR = "$HOME/.config/zsh";
+	};
 
 #################################################
 # symlink your real config files into ~/.config #
 #################################################
 	home.file = {
-# zsh
-		".config/isync/" = {
-			source = "${emailConfigs}/isync/";
+		".config/zsh/" = {
+			source = "${shellConfigs}/zsh/";
 			recursive = true;
 		};
 
-# tmux
-		".config/msmtp/" = {
-			source = "${emailConfigs}/msmtp/";
+		".config/tmux/" = {
+			source = "${shellConfigs}/tmux/";
 			recursive = true;
 		};
+
 	};
 }
-
