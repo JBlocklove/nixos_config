@@ -2,18 +2,19 @@
 
 	imports = [
 		./general.nix
-			./font-setup.nix
-			./gaming.nix
-			./engineering.nix
-			./communication.nix
-			./wm.nix
-			./terminal.nix
-			./audio.nix
-			./xilinx.nix
-			./video.nix
+		./font-setup.nix
+		./gaming.nix
+		./engineering.nix
+		./communication.nix
+		./wm.nix
+		./terminal.nix
+		./audio.nix
+		./xilinx.nix
+		./video.nix
 	];
 
 	general.enable = lib.mkDefault true;
+	gui.enable = lib.mkDefault true;
 	gaming.enable = lib.mkDefault false;
 	engineering.enable = lib.mkDefault false;
 	communication.enable = lib.mkDefault true;

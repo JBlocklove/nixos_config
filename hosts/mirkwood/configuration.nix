@@ -77,30 +77,6 @@
 		packages = with pkgs; [];
 	};
 
-	nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
-	# Allow unfree packages
-	nixpkgs.config.allowUnfree = true;
-
-	# List packages installed in system profile. To search, run:
-	# $ nix search wget
-	environment.systemPackages = with pkgs; [
-		#neovim
-		inputs.catvim.packages.${stdenv.hostPlatform.system}.default
-		wget
-		git
-		alacritty
-		alacritty.terminfo
-		firefox
-		zsh
-		stow
-		htop
-		lm_sensors
-		fanctl
-		ripgrep
-		xdg-desktop-portal-hyprland
-	];
-
 	home-manager = {
 		extraSpecialArgs = { inherit inputs; };
 		users = {
@@ -108,29 +84,27 @@
 		};
 	};
 
+	nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
+	# Allow unfree packages
+	nixpkgs.config.allowUnfree = true;
 
-	#programs.neovim = {
-	#	enable = true;
-	#	defaultEditor = true;
-	#};
-
-	programs.zsh.enable = true;
-	users.defaultUserShell = pkgs.zsh;
-
-	hardware.graphics = {
-		enable = true;
-		enable32Bit = true;
-	};
+	# System-specific packages
+	environment.systemPackages = with pkgs; [
+		lm_sensors
+		fanctl
+	];
 
 	## Custom nixos configs
+	general.enable = true;
+	gui.enable = true;
 	hypr.enable = true;
 	gaming.enable = false;
 	communication.enable = true;
 	engineering.enable = true;
 	term.enable = true;
 	audio.enable = true;
-	xilinx.enable = true;
+	xilinx.enable = true; # FIXME: Does this do anything anymore?
 
 
 	security.sudo = {
@@ -152,16 +126,15 @@
 			];
 			groups = [ "wheel" ];
 		}];
-		extraConfig = with pkgs; ''
+		/* extraConfig = with pkgs; ''
 			# keep your secure_path for user “picloud”
     		Defaults:picloud secure_path="${lib.makeBinPath [ systemd ]}:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin"
 
     		# preserve X11 / Wayland env so GUI apps can connect to your display
     		Defaults env_keep += "DISPLAY XAUTHORITY XDG_RUNTIME_DIR WAYLAND_DISPLAY WAYLAND_SOCKET"
-		'';
+		''; */
 	};
 
-	system.stateVersion = "24.11";
 
 	services.logind = {
 		settings.Login = {
@@ -174,7 +147,6 @@
 		HibernateDelaySec=30m
 	'';
 
-
 	powerManagement.enable = true;
 	powerManagement.powertop.enable = true;
 
@@ -182,71 +154,15 @@
 
 	services.tlp = {
 		enable = true;
-		#settings = {
-		#	CPU_SCALING_GOVERNOR_ON_AC = "performance";
-		#	CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
-
-		#	CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
-		#	CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
-
-		#	#Optional helps save long term battery health
-		#	START_CHARGE_THRESH_BAT0 = 40; # 40 and below it starts to charge
-		#	STOP_CHARGE_THRESH_BAT0 = 90; # 80 and above it stops charging
-
-		#};
 	};
 
-	programs.light.enable = true;
-
-
-	## Lock on resume
-	systemd.services = {
-		lock-before-sleeping = {
-			restartIfChanged = false;
-
-			unitConfig = {
-				Description = "Helper service to bind locker to sleep.target";
-			};
-			serviceConfig = {
-				User = "jason";
-				ExecStart = "/run/current-system/sw/bin/hyprlock";
-				Type = "simple";
-			};
-			before = [
-				"pre-sleep.service"
-			];
-			wantedBy = [
-				"pre-sleep.service"
-			];
-			environment = {
-				WAYLAND_DISPLAY = "wayland-1";
-				XDG_RUNTIME_DIR = "/run/user/1000";
-			};
-		};
-	};
-
-	## Auditing for home dir mkdirs
-	security.auditd.enable = true;
-	security.audit.enable = true;
-	security.audit.failureMode = "printk";
-	security.audit.backlogLimit = 8192;
-	security.audit.rules = [
-		"-a always,exit -F arch=b64 -S mkdir,mkdirat -F dir=/home/jason -k home_mkdir"
-	];
-	services.journald.audit = true;
-
-	services.printing = {
-		enable = true;
-		browsing = true;
-		drivers = with pkgs; [
-			gutenprint
-			hplipWithPlugin
-		];
-	};
 	services.avahi = {
 		enable = true;
 		nssmdns4 = true;
 		openFirewall = true;
 	};
+
+
+	system.stateVersion = "24.11";
 
 }

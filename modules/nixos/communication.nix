@@ -14,6 +14,7 @@
 		#isync
 		#msmtp
 		khard
+		zoom-us
     ];
   };
 }

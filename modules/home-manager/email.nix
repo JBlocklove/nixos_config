@@ -5,9 +5,9 @@ let
 emailConfigs = ./configs/email;
 in
 {
-########################
-# 1) install packages  #
-########################
+#####################
+# install packages  #
+#####################
 	home.packages = with pkgs; [
 		isync      # mbsync
 		msmtp      # SMTP
@@ -21,17 +21,9 @@ in
 		pandoc
 	];
 
-########################################
-# 2) any environment vars you need     #
-########################################
-## home.sessionVariables = {
-##   # if your pass store isn’t at ~/.password-store
-##   PASSWORD_STORE_DIR = "$HOME/.local/share/pass";
-## };
-
-###################################################
-# 3) symlink your real config files into ~/.config #
-###################################################
+################################################
+# symlink your real config files into ~/.config #
+################################################
 	home.file = {
 # mbsync
 		".config/isync/" = {
@@ -78,6 +70,9 @@ in
 ##   source = "${emailConfigs}/khard.conf";
 ## };
 	};
+################################
+# Mail syncinc systemd service # 
+################################
 
 	systemd.user = {
 		services.mailsync = {

@@ -11,11 +11,12 @@ in
 # install packages  #
 #####################
 	home.packages = with pkgs; [
-		super-productivity
+		# super-productivity
 		vdirsyncer
 		khal
 		khard
 		libreoffice
+		tomat
 	];
 #######################################
 # handle secrets in configs with sops #

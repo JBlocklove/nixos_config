@@ -13,15 +13,15 @@ in {
 		yt-dlp
 	];
 
-	services.mopidy = {
-		enable = true;
-		extensionPackages = with pkgs; [
-			mopidy-mpd
-			mopidy-jellyfin
-			mopidy-local
-		];
-		extraConfigFiles = [ "${config.home.homeDirectory}/.config/mopidy/mopidy_secure.conf" ];
-	};
+	# services.mopidy = {
+	# 	enable = true;
+	# 	extensionPackages = with pkgs; [
+	# 		mopidy-mpd
+	# 		mopidy-jellyfin
+	# 		mopidy-local
+	# 	];
+	# 	extraConfigFiles = [ "${config.home.homeDirectory}/.config/mopidy/mopidy_secure.conf" ];
+	# };
 
 	# systemd.user.services.fix-mopidy = {
 	# 	Unit = {

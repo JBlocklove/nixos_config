@@ -3,7 +3,7 @@
 {
 	imports = [
 		inputs.sops-nix.homeManagerModules.sops
-		../../modules/home-manager/firefox.nix
+		../../modules/home-manager/browser.nix
 		../../modules/home-manager/email.nix
 		../../modules/home-manager/music.nix
 		../../modules/home-manager/productivity.nix

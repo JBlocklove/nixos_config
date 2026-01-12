@@ -23,6 +23,7 @@
 				slurp
 				swappy
 				eww
+				wl-clipboard
 			];
 		})
 		(lib.mkIf config.hypr.enable {
@@ -34,6 +35,7 @@
 				catppuccin-cursors.mochaDark
 				lxappearance
 				inputs.hyprdynamicmonitors.packages.${stdenv.hostPlatform.system}.default
+				xdg-desktop-portal-hyprland
 			];
 			programs.hyprland.enable = true;
 			programs.hyprland.withUWSM = true;
