@@ -83,7 +83,11 @@
 				enable32Bit = true;
 			};
 
-			services.udisks2.enable = true;
+			services.udisks2 = {
+				enable = true;
+				mountOnMedia = true;
+			};
+
 			services.udev.extraRules = ''
 				# UD_FILESYSTEM_SHARED == 1: mount filesystem to a shared directory
 				ENV{S_USAGE}=="filesystem|other|crypto", ENV{UDISKS_FILESYSTEM_SHARED}="1"

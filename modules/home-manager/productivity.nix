@@ -17,6 +17,7 @@ in
 		khard
 		libreoffice
 		tomat
+		uair
 	];
 #######################################
 # handle secrets in configs with sops #

@@ -103,12 +103,12 @@ in {
 		};
 	};
 */
-###############################################################
-# install chromium (because sometimes you just need chromium) #
-###############################################################
-	home.packages = with pkgs; [
-		chromium
-	];
+# ###############################################################
+# # install chromium (because sometimes you just need chromium) #
+# ###############################################################
+# 	home.packages = with pkgs; [
+# 		chromium
+# 	];
 
 ############################################
 # symlink real config files into ~/.config #

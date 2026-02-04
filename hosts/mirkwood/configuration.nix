@@ -27,6 +27,7 @@
 			"thunderbolt"
 			"usbcore"
 			"usbhid"
+			"k10temp"
 		];
 
 	};
