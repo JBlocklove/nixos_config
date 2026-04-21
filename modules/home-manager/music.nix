@@ -9,36 +9,10 @@ in {
 		mpc
 		picard
 		chromaprint
-		sshfs
 		yt-dlp
+		finamp
+		playerctl
 	];
-
-	# services.mopidy = {
-	# 	enable = true;
-	# 	extensionPackages = with pkgs; [
-	# 		mopidy-mpd
-	# 		mopidy-jellyfin
-	# 		mopidy-local
-	# 	];
-	# 	extraConfigFiles = [ "${config.home.homeDirectory}/.config/mopidy/mopidy_secure.conf" ];
-	# };
-
-	# systemd.user.services.fix-mopidy = {
-	# 	Unit = {
-	# 		Description = "Runs 1 second of silence in Mopidy to fix a glitch";
-	# 		Requires = [ "mopidy.service" ];
-	# 	};
-
-	# 	Install = {
-	# 		WantedBy = [ "multi-user.target" ];
-	# 	};
-
-	# 	Service = {
-	# 		Type = "oneshot";
-	# 		ExecStart = "/home/jason/.config/mopidy/fix_mopidy.sh";
-	# 		Restart = "on-failure";
-	# 	};
-	# };
 
 	sops.secrets = {
 		mopidy-config = {
@@ -50,20 +24,9 @@ in {
 	};
 
 	home.file = {
-		# ".config/mopidy/" = {
-		# 	source = "${musicConfigs}/mopidy/";
-		# 	recursive = true;
-		# };
-
 		".config/ncmpcpp/" = {
 			source = "${musicConfigs}/ncmpcpp/";
 			recursive = true;
 		};
-
-		#".config/MusicBrainz/" = {
-		#	source = "${musicConfigs}/picard/";
-		#	recursive = true;
-		#};
-
 	};
 }

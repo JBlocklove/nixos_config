@@ -30,4 +30,4 @@ bindkey '^R' history-incremental-search-backward
 
 alias yt-audio="youtube-dl -ic --extract-audio --audio-format mp3 --audio-quality 0"
 
-alias catvim="/home/jason/repos/catvim/result/bin/catvim"
+alias bvim="/home/jason/repos/bannerVim/result/bin/bannerVim"

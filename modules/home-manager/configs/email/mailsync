@@ -5,12 +5,15 @@ MBSYNCRC="$HOME/.config/isync/mbsyncrc"
 MAILDIR="$HOME/.local/share/mail"
 LASTRUN="$HOME/.local/share/mail/.mailsynclastrun"
 
+# NOTIFICATION_CMD="dunstify"
+NOTIFICATION_CMD="notify-send"
+
 # Ensure last run file exists
 touch "$LASTRUN"
 
 # Use notify-send if available
 notify() {
-    command -v dunstify >/dev/null && dunstify " $1" "$2 new emails"
+    command -v $NOTIFICATION_CMD >/dev/null && $NOTIFICATION_CMD " $1" "$2 new emails"
 }
 
 # Sync a single account and notify if new mail exists

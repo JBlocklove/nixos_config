@@ -18,5 +18,11 @@ if [ -r ~/.dir_colors ]; then
     eval $(dircolors ~/.dir_colors);
 fi
 
+# Bind <ctrl>+hjkl to arrows
+bindkey '^H' backward-char
+bindkey '^J' down-line-or-history
+bindkey '^K' up-line-or-history
+bindkey '^L' forward-char
+
 # Non-controlled custom configs
 source ~/.localrc

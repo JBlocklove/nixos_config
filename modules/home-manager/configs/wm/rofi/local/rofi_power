@@ -1,0 +1,21 @@
+#!/bin/sh
+
+if [[ -z "$@" ]]; then
+	echo -en "\0prompt\x1fPower\n"
+	echo -e "logout\nsuspend\nhibernate\nreboot\npoweroff"
+else
+	power=$1
+	if [[ "$power" = "logout" ]]; then
+	    exec hyprctl dispatch exit
+	elif [[ "$power" = "suspend" ]]; then
+	    exec systemctl suspend-then-hibernate
+	elif [[ "$power" = "hibernate" ]]; then
+		exec systemctl hibernate
+	elif [[ "$power" = "reboot" ]]; then
+	    exec systemctl reboot
+	elif [[ "$power" = "poweroff" ]]; then
+	    exec systemctl shutdown now
+	else
+		notify-send "Power" "Invalid option"
+	fi
+fi

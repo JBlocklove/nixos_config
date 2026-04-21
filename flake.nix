@@ -14,8 +14,9 @@
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
-		catvim = {
-			url = "github:JBlocklove/catvim";
+		bannerVim = {
+			# url = "github:JBlocklove/bannerVim";
+			url = "path:/home/jason/repos/bannerVim";
 			flake = true;
 		};
 
@@ -25,6 +26,16 @@
 		};
 
 		sops-nix.url = "github:Mic92/sops-nix";
+
+		nix-index-database = {
+			url = "github:nix-community/nix-index-database";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
+
+		noctalia = {
+			url = "github:JBlocklove/noctalia-shell";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
 
 	};
 
@@ -39,6 +50,7 @@
 				modules = [
 					./hosts/fangorn/configuration.nix
 					inputs.home-manager.nixosModules.default
+					inputs.nix-index-database.nixosModules.default
 				];
 			};
 
@@ -47,6 +59,8 @@
 				modules = [
 					./hosts/mirkwood/configuration.nix
 					inputs.home-manager.nixosModules.default
+					inputs.nix-index-database.nixosModules.default
+					inputs.noctalia.nixosModules.default
 				];
 			};
 

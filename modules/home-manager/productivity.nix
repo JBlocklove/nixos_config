@@ -1,8 +1,7 @@
 { config, pkgs, lib, ... }:
 
 let
-# adjust this relative path if you move the module
-prodConfigs = ./configs/productivity;
+	prodConfigs = ./configs/productivity;
 
 in
 {
@@ -16,8 +15,6 @@ in
 		khal
 		khard
 		libreoffice
-		tomat
-		uair
 	];
 #######################################
 # handle secrets in configs with sops #

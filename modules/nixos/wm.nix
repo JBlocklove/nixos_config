@@ -18,13 +18,27 @@
 				hyprlock
 				hypridle
 				waybar
-				dunst
+				# dunst
+				libnotify
 				grim
 				slurp
 				swappy
 				eww
 				wl-clipboard
+				adwaita-icon-theme
+				gpu-screen-recorder
+				inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
 			];
+			# gtk = {
+			# 	enable = true;
+			# 	iconTheme = {
+			# 		name = "Adwaita";
+			# 		package = pkgs.adwaita-icon-theme;
+			# 	};
+			# };
+			environment.variables = {
+				QT_QPA_PLATFORMTHEME = "gtk3";
+			};
 		})
 		(lib.mkIf config.hypr.enable {
 			environment.systemPackages = with pkgs; [
@@ -34,7 +48,7 @@
 				nwg-look
 				catppuccin-cursors.mochaDark
 				lxappearance
-				inputs.hyprdynamicmonitors.packages.${stdenv.hostPlatform.system}.default
+				inputs.hyprdynamicmonitors.packages.${pkgs.stdenv.hostPlatform.system}.default
 				xdg-desktop-portal-hyprland
 			];
 			programs.hyprland.enable = true;

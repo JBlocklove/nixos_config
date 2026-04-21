@@ -82,14 +82,14 @@ mono body         bold          "^gpg: BAD signature from.*"
 ### ─── FORMATTING & ICONIC LAYOUTS ────────────────────────────────────────────────
 
 # Date line in pager & index
-set date_format    = "%a %d %h %H:%M"
+set date_format    = "%a %d %h %Y | %H:%M"
 
 # Index (message list) layout
 #set index_format   = "%zc %zs %zt | %-18.18L   %@attachment_info@  %-30.100s %> %?Y?%Y ? %(!%a %d %h %H:%M)"
 set index_format = "%zc %zs %zt | %-18.18L   %@attachment_info@ %s%*  %?Y?%Y ? %(!%a %d %h %H:%M)"
 
 # Pager header (when viewing a single message)
-set pager_format   = "%n | %T %s | %* |  %{!%d %b · %H:%M} | %?X? %X?%P"
+set pager_format   = "%n | %T %s | %* |  %{!%d %b · %H:%M} | %?X? %X?"
 
 # Status‐bar (bottom line) layout
 set status_format  = " |%D| %?u?|󰧬 %u| ?%?R?| %R| ?%?d?| %d| ?%?t?| %t| ?%?F?| %F| ?%?p?| %p|? %|─"

@@ -103,4 +103,6 @@ in
 			};
 		};
 	};
+
+## TODO: Create some startup/setup scripts for neomutt
 }
