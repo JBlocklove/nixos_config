@@ -44,7 +44,7 @@
 			system = "x86_64-linux";
 			pkgs = nixpkgs.legacyPackages.${system};
 
-		in{
+		in {
 			nixosConfigurations.fangorn = nixpkgs.lib.nixosSystem {
 				specialArgs = {inherit inputs;};
 				modules = [

@@ -14,7 +14,7 @@ else
 	elif [[ "$power" = "reboot" ]]; then
 	    exec systemctl reboot
 	elif [[ "$power" = "poweroff" ]]; then
-	    exec systemctl shutdown now
+	    exec systemctl poweroff
 	else
 		notify-send "Power" "Invalid option"
 	fi

@@ -9,7 +9,7 @@ in {
 		mpc
 		picard
 		chromaprint
-		yt-dlp
+		# yt-dlp
 		finamp
 		playerctl
 	];
