@@ -1,27 +1,31 @@
 { config, pkgs, lib, ... }:
 
 let
-# adjust this relative path if you move the module
-termConfigs = ./configs/terminal;
-in
-{
-#####################
-# install packages  #
-#####################
+	writingConfigs = ./configs/writing;
+
+in{
+	#####################
+	# install packages  #
+	#####################
 	home.packages = with pkgs; [
 		texliveFull
 		zathura
+		zotero
 	];
-
-#######################################
-# symlink config files into ~/.config #
-#######################################
-	#home.file = {
-	#	".config/yazi/" = {
-	#		source = "${termConfigs}/yazi/";
-	#		recursive = true;
-	#	};
-	#};
+	
+	# ## Zotero works headlessly but then I can't open the UI when I have to
+	# systemd.user = {
+	# 	services.zotero-headless = {
+	# 		Unit = {
+	# 			Description = "Start Zotero in headless mode";
+	# 		};
+	# 		Service = {
+	# 			Type = "oneshot";
+	# 			ExecStart = "${config.home.profileDirectory}/bin/zotero --headless";
+	# 		};
+	# 		Install = {
+	# 			WantedBy = [ "default.target" ];
+	# 		};
+	# 	};
+	# };
 }
-
-

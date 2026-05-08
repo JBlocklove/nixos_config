@@ -15,6 +15,7 @@
 		#msmtp
 		khard
 		zoom-us
+		element-desktop
     ];
   };
 }

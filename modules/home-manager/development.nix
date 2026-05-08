@@ -2,7 +2,7 @@
 
 let
 # adjust this relative path if you move the module
-prodConfigs = ./configs/productivity;
+devConfigs = ./configs/dev;
 
 in
 {

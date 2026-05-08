@@ -6,4 +6,4 @@ dimensions = { columns = 100, lines = 40 }
 
 [window.class]
 general = "floatTerm"
-instance = "floatTerm"
+# instance = "floatTerm"

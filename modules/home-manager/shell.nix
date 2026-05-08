@@ -1,8 +1,13 @@
 { config, pkgs, lib, ... }:
 
 let
-# adjust this relative path if you move the module
-shellConfigs = ./configs/shell;
+	shellConfigs = ./configs/shell;
+
+	gitScripts = pkgs.runCommand "git-scripts" {} ''
+		mkdir -p $out/bin
+		cp -r ${shellConfigs}/git/local/* $out/bin/
+		chmod +x $out/bin/*
+	'';
 in
 {
 #####################
@@ -10,26 +15,29 @@ in
 #####################
 	home.packages = with pkgs; [
 		tmux
+		ranger
+		htop
+		chafa
+		poppler-utils
+		foot
+		git
+		gitScripts
 	];
 
 	programs.zsh = {
 		enable  = true;
-		# enableCompletion = true;
-		# autosuggestion.enable = true;
-		# syntaxHighlighting.enable = true;
+		dotDir = "${config.xdg.configHome}/zsh";
 	};
 
-######################################
-# any environment vars you need     #
-######################################
-	home.sessionVariables = {
-		ZDOTDIR = "$HOME/.config/zsh";
-	};
-
-#################################################
-# symlink your real config files into ~/.config #
-#################################################
+#######################################
+# symlink config files into ~/.config #
+#######################################
 	home.file = {
+		".config/git/" = {
+			source = "${shellConfigs}/git/config";
+			recursive = true;
+		};
+
 		".config/zsh/" = {
 			source = "${shellConfigs}/zsh/";
 			recursive = true;
@@ -40,5 +48,19 @@ in
 			recursive = true;
 		};
 
+		".config/foot/" = {
+			source = "${shellConfigs}/foot/";
+			recursive = true;
+		};
+
+		".config/ranger/" = {
+			source = "${shellConfigs}/ranger/";
+			recursive = true;
+		};
+
+		".config/htop/" = {
+			source = "${shellConfigs}/htop/";
+			recursive = true;
+		};
 	};
 }

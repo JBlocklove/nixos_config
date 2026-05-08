@@ -1,4 +1,4 @@
-# Tmux As Shell when not in a tty
-if [[ ! -z "$DISPLAY" ]]; then
+# Tmux As Shell when not in a tty or disabled
+if [[ ! -z "$DISPLAY"  && -z "$DISABLE_TMUX" ]]; then
 	[[ -z "$TMUX" ]] && exec tmux
 fi

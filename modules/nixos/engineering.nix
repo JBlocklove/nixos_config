@@ -5,16 +5,16 @@
   };
 
   config = lib.mkIf config.engineering.enable {
-    environment.systemPackages = with pkgs; [
+	environment.systemPackages = with pkgs; [
 		# CAD
 		freecad-wayland
 		prusa-slicer
-
+	
 		# PCB
 		kicad
 		platformio
 		avrdude
-
+	
 		# Digital hardware
 		yosys
 		xdot
@@ -22,15 +22,17 @@
 		verilator
 		distrobox
 		#dsview
-
+	
 		# Etc.
 		podman-tui
-    ];
+	];
 
 	services.udev.packages = with pkgs; [
 		platformio-core
 		openocd
 	];
+
+	users.groups.plugdev = {}; # needed by openocd
 
 	virtualisation.podman= {
 		enable = true;
@@ -38,5 +40,3 @@
 	};
   };
 }
-
-

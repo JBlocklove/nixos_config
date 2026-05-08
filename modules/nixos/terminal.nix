@@ -6,8 +6,7 @@
 
   config = lib.mkIf config.term.enable {
     environment.systemPackages = with pkgs; [
-		alacritty
-		alacritty.terminfo
+		foot
 		khard
 		vdirsyncer
 		ranger

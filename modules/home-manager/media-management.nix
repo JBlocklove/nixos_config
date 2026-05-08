@@ -1,23 +1,15 @@
 { config, pkgs, lib, ... }:
-
 let
-# adjust this relative path if you move the module
-managementConfigs = ./configs/management;
+	mediaConfigs = ./configs/media;
 
-in
-{
-
-#####################
-# install packages  #
-#####################
+in {
+	#####################
+	# install packages  #
+	#####################
 	home.packages = with pkgs; [
 		calibre
 		vlc
 		unison
 		sshfs
 	];
-
 }
-
-
-

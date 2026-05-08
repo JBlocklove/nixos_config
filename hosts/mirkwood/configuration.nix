@@ -70,11 +70,10 @@
 		variant = "";
 	};
 
-	# Define a user account. Don't forget to set a password with ‘passwd’.
 	users.users.jason = {
 		isNormalUser = true;
 		description = "Jason";
-		extraGroups = [ "networkmanager" "wheel" "video" "audio" "dialout" ];
+		extraGroups = [ "networkmanager" "wheel" "video" "audio" "dialout" "plugdev" ];
 		packages = with pkgs; [];
 	};
 
@@ -105,7 +104,7 @@
 	engineering.enable = true;
 	term.enable = true;
 	audio.enable = true;
-	xilinx.enable = true; # FIXME: Does this do anything anymore?
+	xilinx.enable = false; # FIXME: Does this do anything anymore?
 
 
 	security.sudo = {
@@ -141,19 +140,45 @@
 		settings.Login = {
 			HandleLidSwitch = "suspend-then-hibernate";
 			HandleLidSwitchExternalPower = "suspend-then-hibernate";
+			HandleLidSwitchDocked = "ignore";
 		};
 	};
 
-	systemd.sleep.extraConfig = ''
-		HibernateDelaySec=30m
-	'';
+	systemd.sleep.settings.Sleep = { HibernateDelaySec = "15m"; };
+
+	## Lock on resume
+	systemd.services = {
+		lock-before-sleeping = {
+			restartIfChanged = false;
+
+			unitConfig = {
+				Description = "Helper service to bind locker to sleep.target";
+			};
+			serviceConfig = {
+				User = "jason";
+				Type = "simple";
+				ExecStart = "/run/current-system/sw/bin/noctalia-shell ipc call lockScreen lock";
+				ExecStartPost = "${pkgs.coreutils}/bin/sleep 0.3";
+			};
+			before = [
+				"sleep.target"
+			];
+			wantedBy = [
+				"sleep.target"
+			];
+			environment = {
+				WAYLAND_DISPLAY = "wayland-1";
+				XDG_RUNTIME_DIR = "/run/user/1000";
+			};
+		};
+	};
 
 	powerManagement.enable = true;
 	powerManagement.powertop.enable = true;
 
 	services.thermald.enable = true;
 
-	services.tlp = {
+	services.power-profiles-daemon = {
 		enable = true;
 	};
 

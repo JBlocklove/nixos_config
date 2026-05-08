@@ -23,6 +23,7 @@
 
 			environment.systemPackages = with pkgs; [
 				gcc
+				file
 				gparted
 				pass
 				imagemagick
@@ -36,14 +37,20 @@
 				libsecret
 				wget
 				git
-				inputs.catvim.packages.${stdenv.hostPlatform.system}.default
+				inputs.bannerVim.packages.${pkgs.stdenv.hostPlatform.system}.default
 				zsh
 				htop
 				stow # For now...
 				ripgrep
 			];
 
-			programs.zsh.enable = true;
+			programs.nix-index-database = {
+				comma.enable = true;
+			};
+
+			programs.zsh = {
+				enable = true;
+			};
 			users.defaultUserShell = pkgs.zsh;
 
 
@@ -63,7 +70,7 @@
 		})
 		(lib.mkIf ( config.general.enable && config.gui.enable ) {
 			environment.systemPackages = with pkgs; [
-				alacritty
+				foot
 				librewolf
 				rofi
 				w3m
@@ -76,7 +83,11 @@
 				zathura
 			];
 
-			programs.light.enable = true;
+			hardware.acpilight.enable = true;
+
+			# services.udev.extraRules = ''
+			# 	ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="amdgpu_bl1", GROUP="video", MODE="0664"
+			# '';
 
 			hardware.graphics = {
 				enable = true;
@@ -88,39 +99,39 @@
 				mountOnMedia = true;
 			};
 
-			services.udev.extraRules = ''
-				# UD_FILESYSTEM_SHARED == 1: mount filesystem to a shared directory
-				ENV{S_USAGE}=="filesystem|other|crypto", ENV{UDISKS_FILESYSTEM_SHARED}="1"
-			'';
+			# services.udev.extraRules = ''
+			# 	# UD_FILESYSTEM_SHARED == 1: mount filesystem to a shared directory
+			# 	ENV{S_USAGE}=="filesystem|other|crypto", ENV{UDISKS_FILESYSTEM_SHARED}="1"
+			# '';
 			systemd.tmpfiles.rules = [
 				"d /media 0755 root root - -"
 			];
 
 			## Lock on resume
-			systemd.services = {
-				lock-before-sleeping = {
-					restartIfChanged = false;
-
-					unitConfig = {
-						Description = "Helper service to bind locker to sleep.target";
-					};
-					serviceConfig = {
-						User = "jason";
-						ExecStart = "/run/current-system/sw/bin/hyprlock";
-						Type = "simple";
-					};
-					before = [
-						"pre-sleep.service"
-					];
-					wantedBy = [
-						"pre-sleep.service"
-					];
-					environment = {
-						WAYLAND_DISPLAY = "wayland-1";
-						XDG_RUNTIME_DIR = "/run/user/1000";
-					};
-				};
-			};
+			# systemd.services = {
+			# 	lock-before-sleeping = {
+			# 		restartIfChanged = false;
+			#
+			# 		unitConfig = {
+			# 			Description = "Helper service to bind locker to sleep.target";
+			# 		};
+			# 		serviceConfig = {
+			# 			User = "jason";
+			# 			ExecStart = "/run/current-system/sw/bin/hyprlock";
+			# 			Type = "simple";
+			# 		};
+			# 		before = [
+			# 			"pre-sleep.service"
+			# 		];
+			# 		wantedBy = [
+			# 			"pre-sleep.service"
+			# 		];
+			# 		environment = {
+			# 			WAYLAND_DISPLAY = "wayland-1";
+			# 			XDG_RUNTIME_DIR = "/run/user/1000";
+			# 		};
+			# 	};
+			# };
 
 			services.printing = {
 				enable = true;
@@ -130,8 +141,6 @@
 					hplipWithPlugin
 				];
 			};
-
-
 		})
 	];
 }

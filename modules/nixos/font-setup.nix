@@ -14,7 +14,7 @@
 				defaultFonts = {
 					serif = [ "Liberation Serif" ];
 					sansSerif = [ "Liberation Sans" ];
-					monospace = [ "JerBrainsMonoNL NF" ];
+					monospace = [ "JetBrainsMonoNL NF" ];
 				};
 			};
 		};
