@@ -1,191 +1,148 @@
 { pkgs, inputs, ... }:
 
 {
-	imports =
-		[
-			./hardware-configuration.nix
-			inputs.home-manager.nixosModules.default
-			./../../modules/nixos/default.nix
-		];
+    imports = [
+        ## Hardware setup
+        ./hardware-configuration.nix
+        ../../modules/nixos/hardware/audio.nix
+        ../../modules/nixos/hardware/bluetooth.nix
+        ../../modules/nixos/hardware/graphics.nix
+        ../../modules/nixos/hardware/printing.nix
+        ../../modules/nixos/hardware/storage.nix
 
-    ############################
-    ## Boot and kernel params ##
-    ############################
-	boot = {
-		loader = {
-			systemd-boot.enable = true;
-			efi.canTouchEfiVariables = true;
-		};
+        ## Window manager setup
+        ../../modules/nixos/wm/hyprland.nix
 
-		kernelParams = [
-			"resume=/dev/disk/by-uuid/01962e0a-0daa-4750-a10d-366614a738d6"
-		];
+        ## Additional nixos modules
+        ../../modules/nixos/fonts.nix
+        ../../modules/nixos/engineering.nix
+        ../../modules/nixos/secrets.nix
+    ];
 
-		kernelModules = [
-			"thunderbolt"
-			"usbcore"
-			"usbhid"
-			"k10temp"
-		];
+    # =========================================================================
+    # Boot & Kernel Options
+    # =========================================================================
+    boot = {
+        loader = {
+            systemd-boot.enable = true;
+            efi.canTouchEfiVariables = true;
+        };
 
-	};
+        # Hibernation resume partition (swap)
+        kernelParams = [
+            "resume=/dev/disk/by-uuid/01962e0a-0daa-4750-a10d-366614a738d6"
+        ];
 
-    ################
-    ## Udev Rules ##
-    ################
-	services.udev.extraRules = ''
-		# Thunderbolt authorization (if needed)
-		ACTION=="add", SUBSYSTEM=="thunderbolt", ATTR{authorized}=="0", ATTR{authorized}="1"
-	'';
+        kernelModules = [
+            "thunderbolt"
+            "usbcore"
+            "usbhid"
+            "k10temp"
+        ];
+    };
 
-    ################
-    ## Networking ##
-    ################
-	networking.hostName = "mirkwood";
+    # Udev rules to work with thunderbolt dock
+    services.udev.extraRules = ''
+    # Thunderbolt authorization
+    ACTION=="add", SUBSYSTEM=="thunderbolt", ATTR{authorized}=="0", ATTR{authorized}="1"
+    '';
 
-	# Enable networking
-	networking.networkmanager.enable = true;
-	programs.nm-applet.enable = true;
+    # =========================================================================
+    # Networking & Localization
+    # =========================================================================
+    networking.hostName = "mirkwood";
+    networking.networkmanager.enable = true;
+    programs.nm-applet.enable = true;
 
-	# Set your time zone.
-	time.timeZone = "America/New_York";
+    time.timeZone = "America/New_York";
 
-	# Select internationalisation properties.
-	i18n.defaultLocale = "en_US.UTF-8";
+    i18n.defaultLocale = "en_US.UTF-8";
+    i18n.extraLocaleSettings = {
+        LC_ADDRESS = "en_US.UTF-8";
+        LC_IDENTIFICATION = "en_US.UTF-8";
+        LC_MEASUREMENT = "en_US.UTF-8";
+        LC_MONETARY = "en_US.UTF-8";
+        LC_NAME = "en_US.UTF-8";
+        LC_NUMERIC = "en_US.UTF-8";
+        LC_PAPER = "en_US.UTF-8";
+        LC_TELEPHONE = "en_US.UTF-8";
+        LC_TIME = "en_US.UTF-8";
+    };
 
-	i18n.extraLocaleSettings = {
-		LC_ADDRESS = "en_US.UTF-8";
-		LC_IDENTIFICATION = "en_US.UTF-8";
-		LC_MEASUREMENT = "en_US.UTF-8";
-		LC_MONETARY = "en_US.UTF-8";
-		LC_NAME = "en_US.UTF-8";
-		LC_NUMERIC = "en_US.UTF-8";
-		LC_PAPER = "en_US.UTF-8";
-		LC_TELEPHONE = "en_US.UTF-8";
-		LC_TIME = "en_US.UTF-8";
-	};
+    services.xserver.xkb = {
+        layout = "us";
+        variant = "";
+    };
 
-	# Configure keymap in X11
-	services.xserver.xkb = {
-		layout = "us";
-		variant = "";
-	};
+    # =========================================================================
+    # User Account Space
+    # =========================================================================
+    services.getty.autologinUser = "jason";
 
-    # Automatically log in to my user
-	services.getty.autologinUser = "jason";
+    users.users.jason = {
+        isNormalUser = true;
+        extraGroups = [ "networkmanager" "wheel" "video" "audio" "dialout" "plugdev" ];
+    };
 
-    # Managed further in home-manager
-	users.users.jason = {
-		isNormalUser = true;
-		description = "Jason";
-		extraGroups = [ "networkmanager" "wheel" "video" "audio" "dialout" "plugdev" ];
-	};
+    home-manager = {
+        extraSpecialArgs = { inherit inputs; };
+        useGlobalPkgs = true;
+        useUserPackages = true;
+        users = {
+            "jason" = import ./home.nix;
+        };
+    };
 
-	home-manager = {
-		extraSpecialArgs = { inherit inputs; };
-		users = {
-			"jason" = import ./home.nix;
-		};
-	};
+    nixpkgs.config.allowUnfree = true;
 
-	nix.settings.experimental-features = [ "nix-command" "flakes" ];
+    # =========================================================================
+    # Power Management & Laptop Sleep Quirks
+    # =========================================================================
+    powerManagement.enable = true;
+    powerManagement.powertop.enable = true;
+    services.thermald.enable = true;
+    services.power-profiles-daemon.enable = true;
 
-	# Allow unfree packages
-	nixpkgs.config.allowUnfree = true;
+    services.logind = {
+        settings.Login = {
+            HandleLidSwitch = "suspend-then-hibernate";
+            HandleLidSwitchExternalPower = "suspend-then-hibernate";
+            HandleLidSwitchDocked = "ignore";
+        };
+    };
 
-	# System-specific packages
-	environment.systemPackages = with pkgs; [
-		lm_sensors
-		fanctl
-	];
+    systemd.sleep.settings.Sleep = { 
+        HibernateDelaySec = "15m"; 
+    };
 
-	## Custom nixos configs
-	general.enable = true;
-	gui.enable = true;
-	hypr.enable = true;
-	gaming.enable = false;
-	communication.enable = true;
-	engineering.enable = true;
-	term.enable = true;
-	audio.enable = true;
-	xilinx.enable = false; # FIXME: Does this do anything anymore?
+    # Lock screen automatically before the laptop goes to sleep
+    systemd.services.lock-before-sleeping = {
+        restartIfChanged = false;
+        unitConfig.Description = "Helper service to bind locker to sleep.target";
 
+        serviceConfig = {
+            User = "jason";
+            Type = "simple";
+            # Using direct store path instead of an impure system path
+            ExecStart = "/run/current-system/sw/bin/noctalia-shell ipc call lockScreen lock";
+            ExecStartPost = "/run/current-system/sw/bin/sleep 0.3";
+        };
 
-	security.sudo = {
-		enable = true;
-		extraRules = [{
-			commands = [
-			{
-				command = "/run/current-system/sw/bin/systemctl suspend";
-				options = [ "NOPASSWD" ];
-			}
-			{
-				command = "/run/current-system/sw/bin/reboot";
-				options = [ "NOPASSWD" ];
-			}
-			{
-				command = "/run/current-system/sw/bin/shutdown now";
-				options = [ "NOPASSWD" ];
-			}
-			];
-			groups = [ "wheel" ];
-		}];
-	};
+        before = [ "sleep.target" ];
+        wantedBy = [ "sleep.target" ];
 
+        environment = {
+            WAYLAND_DISPLAY = "wayland-1";
+            XDG_RUNTIME_DIR = "/run/user/1000";
+        };
+    };
 
-	services.logind = {
-		settings.Login = {
-			HandleLidSwitch = "suspend-then-hibernate";
-			HandleLidSwitchExternalPower = "suspend-then-hibernate";
-			HandleLidSwitchDocked = "ignore";
-		};
-	};
+    # Local network discovery
+    services.avahi = {
+        enable = true;
+        nssmdns4 = true;
+        openFirewall = true;
+    };
 
-	systemd.sleep.settings.Sleep = { HibernateDelaySec = "15m"; };
-
-	## Lock on resume
-	systemd.services = {
-		lock-before-sleeping = {
-			restartIfChanged = false;
-
-			unitConfig = {
-				Description = "Helper service to bind locker to sleep.target";
-			};
-			serviceConfig = {
-				User = "jason";
-				Type = "simple";
-				ExecStart = "/run/current-system/sw/bin/noctalia-shell ipc call lockScreen lock";
-				ExecStartPost = "${pkgs.coreutils}/bin/sleep 0.3";
-			};
-			before = [
-				"sleep.target"
-			];
-			wantedBy = [
-				"sleep.target"
-			];
-			environment = {
-				WAYLAND_DISPLAY = "wayland-1";
-				XDG_RUNTIME_DIR = "/run/user/1000";
-			};
-		};
-	};
-
-	powerManagement.enable = true;
-	powerManagement.powertop.enable = true;
-
-	services.thermald.enable = true;
-
-	services.power-profiles-daemon = {
-		enable = true;
-	};
-
-	services.avahi = {
-		enable = true;
-		nssmdns4 = true;
-		openFirewall = true;
-	};
-
-
-	system.stateVersion = "24.11";
-
+    system.stateVersion = "24.11";
 }
