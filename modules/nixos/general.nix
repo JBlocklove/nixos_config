@@ -37,7 +37,7 @@
 				libsecret
 				wget
 				git
-				inputs.bannerVim.packages.${pkgs.stdenv.hostPlatform.system}.default
+				inputs.nix-neovim.packages.${pkgs.stdenv.hostPlatform.system}.default
 				zsh
 				htop
 				stow # For now...

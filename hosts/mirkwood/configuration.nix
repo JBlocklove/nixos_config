@@ -1,18 +1,16 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ config, pkgs, inputs, ... }:
+{ pkgs, inputs, ... }:
 
 {
 	imports =
-		[ # Include the results of the hardware scan.
+		[
 			./hardware-configuration.nix
 			inputs.home-manager.nixosModules.default
 			./../../modules/nixos/default.nix
 		];
 
-# Boot stuff
+    ############################
+    ## Boot and kernel params ##
+    ############################
 	boot = {
 		loader = {
 			systemd-boot.enable = true;
@@ -32,12 +30,18 @@
 
 	};
 
+    ################
+    ## Udev Rules ##
+    ################
 	services.udev.extraRules = ''
 		# Thunderbolt authorization (if needed)
 		ACTION=="add", SUBSYSTEM=="thunderbolt", ATTR{authorized}=="0", ATTR{authorized}="1"
 	'';
 
-	networking.hostName = "mirkwood"; # Define your hostname.
+    ################
+    ## Networking ##
+    ################
+	networking.hostName = "mirkwood";
 
 	# Enable networking
 	networking.networkmanager.enable = true;
@@ -61,20 +65,20 @@
 		LC_TIME = "en_US.UTF-8";
 	};
 
-
-	services.getty.autologinUser = "jason";
-
 	# Configure keymap in X11
 	services.xserver.xkb = {
 		layout = "us";
 		variant = "";
 	};
 
+    # Automatically log in to my user
+	services.getty.autologinUser = "jason";
+
+    # Managed further in home-manager
 	users.users.jason = {
 		isNormalUser = true;
 		description = "Jason";
 		extraGroups = [ "networkmanager" "wheel" "video" "audio" "dialout" "plugdev" ];
-		packages = with pkgs; [];
 	};
 
 	home-manager = {
@@ -126,13 +130,6 @@
 			];
 			groups = [ "wheel" ];
 		}];
-		/* extraConfig = with pkgs; ''
-			# keep your secure_path for user “picloud”
-    		Defaults:picloud secure_path="${lib.makeBinPath [ systemd ]}:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin"
-
-    		# preserve X11 / Wayland env so GUI apps can connect to your display
-    		Defaults env_keep += "DISPLAY XAUTHORITY XDG_RUNTIME_DIR WAYLAND_DISPLAY WAYLAND_SOCKET"
-		''; */
 	};
 
 

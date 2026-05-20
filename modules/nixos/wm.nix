@@ -28,7 +28,7 @@
 				cliphist
 				adwaita-icon-theme
 				gpu-screen-recorder
-				inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
+				noctalia-shell
 			];
 			# gtk = {
 			# 	enable = true;

@@ -19,5 +19,5 @@ macro index o "<shell-escape>mailsync jmb9986@nyu.edu<enter>" "run mbsync to syn
 macro index \eg "<enter-command>unset wait_key<enter><shell-escape>gpg --list-secret-keys; printf 'Enter email ID of user to publish: '; read eID; printf 'Enter fingerprint of GPG key to publish: '; read eFGPT; /usr/local/libexec/gpg-wks-client --create \$eFGPT \$eID | msmtp --read-envelope-from --read-recipients -a jmb9986@nyu.edu<enter>"  "publish GPG key to WKS provider"
 macro index \eh "<pipe-message>/usr/local/libexec/gpg-wks-client --receive | msmtp --read-envelope-from --read-recipients -a jmb9986@nyu.edu<enter>" "confirm GPG publication"
 
-mailboxes "=INBOX" "=HOST_Forms" "=[Gmail].Drafts" "=[Gmail].Sent Mail" "=[Gmail].Spam" "=[Gmail].Trash"
+mailboxes "=INBOX" "=DAC_Responses" "=[Gmail].Drafts" "=[Gmail].Sent Mail" "=[Gmail].Spam" "=[Gmail].Trash"
 named-mailboxes "jason.blocklove@nyu.edu" "+INBOX"
