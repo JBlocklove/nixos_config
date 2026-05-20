@@ -17,11 +17,13 @@ in
 		tmux
 		ranger
 		htop
-		chafa
-		poppler-utils
-		foot
 		git
 		gitScripts
+        ripgrep
+        bat
+        procs
+        lsd
+        unzip
 	];
 
 	programs.zsh = {
@@ -45,11 +47,6 @@ in
 
 		".config/tmux/" = {
 			source = "${shellConfigs}/tmux/";
-			recursive = true;
-		};
-
-		".config/foot/" = {
-			source = "${shellConfigs}/foot/";
 			recursive = true;
 		};
 

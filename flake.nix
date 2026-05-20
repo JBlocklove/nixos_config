@@ -45,6 +45,7 @@
             sharedModules = [
                 inputs.home-manager.nixosModules.default
                 inputs.nix-index-database.nixosModules.default
+                ./hosts/common.nix
             ];
         in {
             nixosConfigurations = {

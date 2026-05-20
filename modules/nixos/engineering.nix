@@ -1,42 +1,17 @@
-{ config, pkgs, lib, ... }: {
+{ pkgs, ... }: {
 
-  options = {
-    engineering.enable = lib.mkEnableOption "enables engineering programs";
+  # Container virtualization infrastructure
+  virtualisation.podman = {
+    enable = true;
+    dockerCompat = true;
   };
 
-  config = lib.mkIf config.engineering.enable {
-	environment.systemPackages = with pkgs; [
-		# CAD
-		freecad-wayland
-		prusa-slicer
-	
-		# PCB
-		kicad
-		platformio
-		avrdude
-	
-		# Digital hardware
-		yosys
-		xdot
-		iverilog
-		verilator
-		distrobox
-		#dsview
-	
-		# Etc.
-		podman-tui
-	];
+  # System groups required for physical hardware programmers (JTAG, AVR, etc.)
+  users.groups.plugdev = {};
 
-	services.udev.packages = with pkgs; [
-		platformio-core
-		openocd
-	];
-
-	users.groups.plugdev = {}; # needed by openocd
-
-	virtualisation.podman= {
-		enable = true;
-		dockerCompat = true;
-	};
-  };
+  # Hardware rules
+  services.udev.packages = with pkgs; [
+    platformio-core
+    openocd
+  ];
 }

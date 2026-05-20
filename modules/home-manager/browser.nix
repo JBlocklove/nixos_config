@@ -1,12 +1,12 @@
-{ config, pkgs, inputs, lib, ... }:
+{ pkgs, inputs, ... }:
 
 let
 	browserConfigs = ./configs/browser;
 in {
 
-#######################################
-# setup librewolf (transient browser) #
-#######################################
+    #######################################
+    # setup librewolf (transient browser) #
+    #######################################
 
 	programs.librewolf = {
 		enable  = true;
@@ -59,9 +59,9 @@ in {
 		};
 	};
 
-############################################
-# symlink real config files into ~/.config #
-############################################
+    #######################################
+    # symlink config files into ~/.config #
+    #######################################
 	home.file = {
 		".config/tridactyl/" = {
 			source = "${browserConfigs}/tridactyl/";

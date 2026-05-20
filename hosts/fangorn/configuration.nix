@@ -1,186 +1,122 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { config, pkgs, inputs, ... }:
 
 {
-	imports =
-		[ # Include the results of the hardware scan.
-			./hardware-configuration.nix
-			inputs.home-manager.nixosModules.default
-			./../../modules/nixos/default.nix
-		];
+    imports = [
+        ## Hardware setup
+        ./hardware-configuration.nix
+        ../../modules/nixos/hardware/audio.nix
+        ../../modules/nixos/hardware/bluetooth.nix
+        ../../modules/nixos/hardware/graphics.nix
+        ../../modules/nixos/hardware/printing.nix
+        ../../modules/nixos/hardware/storage.nix
 
-# Boot stuff
-	boot = {
-		loader = {
-			systemd-boot.enable = true;
-			efi.canTouchEfiVariables = true;
-		};
+        ## Window manager setup
+        ../../modules/nixos/wm/hyprland.nix
 
-		initrd.kernelModules = [ "amdgpu" "coretemp" ];
-	};
+        ## Additional nixos modules
+        ../../modules/nixos/fonts.nix
+        ../../modules/nixos/engineering.nix
+        ../../modules/nixos/secrets.nix
+        ../../modules/nixos/gaming.nix
+    ];
 
-	networking.hostName = "fangorn"; # Define your hostname.
+    # =========================================================================
+    # Boot & Kernel Options
+    # =========================================================================
+    boot = {
+        loader = {
+            systemd-boot.enable = true;
+            efi.canTouchEfiVariables = true;
+        };
 
-# Enable networking
-		networking.networkmanager.enable = true;
+        kernelModules = [
+            "amdgpu"
+            "coretemp"
+        ];
+    };
 
-# Set your time zone.
-	time.timeZone = "America/New_York";
+    # =========================================================================
+    # Networking & Localization
+    # =========================================================================
+    networking.hostName = "fangorn";
+    networking.networkmanager.enable = true;
 
-# Select internationalisation properties.
-	i18n.defaultLocale = "en_US.UTF-8";
+    time.timeZone = "America/New_York";
 
-	i18n.extraLocaleSettings = {
-		LC_ADDRESS = "en_US.UTF-8";
-		LC_IDENTIFICATION = "en_US.UTF-8";
-		LC_MEASUREMENT = "en_US.UTF-8";
-		LC_MONETARY = "en_US.UTF-8";
-		LC_NAME = "en_US.UTF-8";
-		LC_NUMERIC = "en_US.UTF-8";
-		LC_PAPER = "en_US.UTF-8";
-		LC_TELEPHONE = "en_US.UTF-8";
-		LC_TIME = "en_US.UTF-8";
-	};
+    i18n.defaultLocale = "en_US.UTF-8";
+    i18n.extraLocaleSettings = {
+        LC_ADDRESS = "en_US.UTF-8";
+        LC_IDENTIFICATION = "en_US.UTF-8";
+        LC_MEASUREMENT = "en_US.UTF-8";
+        LC_MONETARY = "en_US.UTF-8";
+        LC_NAME = "en_US.UTF-8";
+        LC_NUMERIC = "en_US.UTF-8";
+        LC_PAPER = "en_US.UTF-8";
+        LC_TELEPHONE = "en_US.UTF-8";
+        LC_TIME = "en_US.UTF-8";
+    };
 
-	services.getty.autologinUser = "jason";
-
-# Configure keymap in X11
-	services.xserver.xkb = {
-		layout = "us";
-		variant = "";
-	};
-
-# Environment variables
-	environment.variables = {
-		EDITOR = "nvim";
-		VISUAL = "nvim";
-	};
-
-# Define a user account. Don't forget to set a password with ‘passwd’.
-	users.users.jason = {
-		isNormalUser = true;
-		description = "Jason";
-		extraGroups = [ "networkmanager" "wheel" "video" "audio" ];
-		packages = with pkgs; [];
-	};
-
-	nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
-# Allow unfree packages
-	nixpkgs.config.allowUnfree = true;
-
-# List packages installed in system profile. To search, run:
-# $ nix search wget
-	environment.systemPackages = with pkgs; [
-		neovim
-		wget
-		git
-		alacritty
-		firefox
-		zsh
-		stow
-		htop
-		lm_sensors
-		fanctl
-		ripgrep
-		xdg-desktop-portal-hyprland
-	];
-
-	home-manager = {
-		extraSpecialArgs = { inherit inputs; };
-		users = {
-			"jason" = import ./home.nix;
-		};
-	};
+    services.xserver.xkb = {
+        layout = "us";
+        variant = "";
+    };
 
 
+    # =========================================================================
+    # User Account Space
+    # =========================================================================
+    services.getty.autologinUser = "jason";
 
-	programs.neovim = {
-		enable = true;
-		defaultEditor = true;
-	};
+    users.users.jason = {
+        isNormalUser = true;
+        extraGroups = [ "networkmanager" "wheel" "video" "audio" "dialout" "plugdev" ];
+    };
 
-	programs.zsh.enable = true;
-	users.defaultUserShell = pkgs.zsh;
+    home-manager = {
+        extraSpecialArgs = { inherit inputs; };
+        useGlobalPkgs = true;
+        useUserPackages = true;
+        users = {
+            "jason" = import ./home.nix;
+        };
+    };
 
-	hardware.graphics = {
-		enable = true;
-		enable32Bit = true;
-	};
-
-
-	hypr.enable = true;
-	gaming.enable = true;
-	communication.enable = true;
-	engineering.enable = true;
-	term.enable = true;
-	audio.enable = true;
-
-
-	fileSystems."/mnt/games" = {
-		device = "/dev/disk/by-uuid/a7b7277d-b66e-4290-b58f-48262370b9ea";
-		fsType = "ext4";
-		mountPoint = "/mnt/games";
-		options = [ "defaults" ];
-		neededForBoot = false;
-	};
+    nixpkgs.config.allowUnfree = true;
 
 
-	security.sudo = {
-		enable = true;
-		extraRules = [{
-			commands = [
-			{
-				command = "/run/current-system/sw/bin/systemctl suspend";
-				options = [ "NOPASSWD" ];
-			}
-			{
-				command = "/run/current-system/sw/bin/reboot";
-				options = [ "NOPASSWD" ];
-			}
-			{
-				command = "/run/current-system/sw/bin/shutdown now";
-				options = [ "NOPASSWD" ];
-			}
-			];
-			groups = [ "wheel" ];
-		}];
-		extraConfig = with pkgs; ''
-			Defaults:picloud secure_path="${lib.makeBinPath [
-				systemd
-			]}:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin"
-		'';
-	};
+    # =========================================================================
+    # Additional drive mounting
+    # =========================================================================
+    fileSystems."/mnt/games" = {
+        device = "/dev/disk/by-uuid/a7b7277d-b66e-4290-b58f-48262370b9ea";
+        fsType = "ext4";
+        mountPoint = "/mnt/games";
+        options = [ "defaults" ];
+        neededForBoot = false;
+    };
 
-services.openssh = {
-	enable = true;
-	ports = [ 8222 ];
-	settings = {
-		PasswordAuthentication = false;
-		AllowUsers = null;
-		UseDns = true;
-		X11Forwarding = true;
-		PermitRootLogin = "no";
-	};
-};
 
-	system.stateVersion = "24.11"; # Did you read the comment?
+    # =========================================================================
+    # Allow SSH remote access
+    # =========================================================================
+    services.openssh = {
+        enable = true;
+        ports = [ 8222 ];
+        settings = {
+            PasswordAuthentication = false;
+            AllowUsers = null;
+            UseDns = true;
+            X11Forwarding = true;
+            PermitRootLogin = "no";
+        };
+    };
 
-	services.printing = {
-		enable = true;
-		browsing = true;
-		drivers = with pkgs; [
-			gutenprint
-			hplipWithPlugin
-		];
-	};
-	services.avahi = {
-		enable = true;
-		nssmdns4 = true;
-		openFirewall = true;
-	};
+    # Local network discovery
+    services.avahi = {
+        enable = true;
+        nssmdns4 = true;
+        openFirewall = true;
+    };
 
+    system.stateVersion = "24.11"; # Did you read the comment?
 }

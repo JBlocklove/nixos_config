@@ -1,15 +1,12 @@
-{ config, pkgs, lib, ... }: {
+{ pkgs, ... }: {
 
-  options = {
-    gaming.enable = lib.mkEnableOption "enables gaming programs and setup";
-  };
+    programs.steam = {
+        enable = true;
+    };
 
-  config = lib.mkIf config.gaming.enable {
     environment.systemPackages = with pkgs; [
-		steam
 		lutris
 		heroic
     ];
-  };
 }
 
