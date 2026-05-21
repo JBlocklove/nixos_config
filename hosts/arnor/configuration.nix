@@ -4,6 +4,9 @@
 	imports = [
 		## Hardware setup
 		./hardware-configuration.nix
+
+		## Jellyfin
+		../../modules/nixos/server_programs/jellyfin.nix
 	];
 
 	# =========================================================================
@@ -126,13 +129,6 @@
 			nvidiaBusId = "PCI:1:0:0";
 		};
 	};
-
-	# Jellyfin itself
-	services.jellyfin = {
-		enable = true;
-		openFirewall = true;
-	};
-	users.users.jellyfin.extraGroups = [ "video" "render" ];
 
 	system.stateVersion = "25.11";
 
