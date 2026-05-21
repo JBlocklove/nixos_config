@@ -107,11 +107,11 @@
         "wrappers": "wrappers"
       },
       "locked": {
-        "lastModified": 1778687258,
-        "narHash": "sha256-+iW8sGpjbJ4d9jvkPNsU7qNMZOJT+8Mj95ZaRhrKhSk=",
+        "lastModified": 1779321430,
+        "narHash": "sha256-WtMmVL59Wlxd4fbKvcAeNhuqjE4rtpAFgth0xk1aKGE=",
         "owner": "JBlocklove",
         "repo": "nix-neovim",
-        "rev": "d4e2cfa04cd3f46bb418934a045ea81746d249ef",
+        "rev": "c525cf56944b9648cadd11bfb90c5e976f7c407f",
         "type": "github"
       },
       "original": {

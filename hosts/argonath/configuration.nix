@@ -4,20 +4,6 @@
     imports = [
         ## Hardware setup
         ./hardware-configuration.nix
-        ../../modules/nixos/hardware/audio.nix
-        ../../modules/nixos/hardware/bluetooth.nix
-        ../../modules/nixos/hardware/graphics.nix
-        ../../modules/nixos/hardware/printing.nix
-        ../../modules/nixos/hardware/storage.nix
-
-        ## Window manager setup
-        ../../modules/nixos/wm/hyprland.nix
-
-        ## Additional nixos modules
-        ../../modules/nixos/fonts.nix
-        ../../modules/nixos/engineering.nix
-        ../../modules/nixos/secrets.nix
-        ../../modules/nixos/gaming.nix
     ];
 
     # =========================================================================
@@ -29,16 +15,16 @@
             efi.canTouchEfiVariables = true;
         };
 
-        kernelModules = [
-            "amdgpu"
-            "coretemp"
-        ];
+        # kernelModules = [
+        #     "amdgpu"
+        #     "coretemp"
+        # ];
     };
 
     # =========================================================================
     # Networking & Localization
     # =========================================================================
-    networking.hostName = "fangorn";
+    networking.hostName = "argonath";
     networking.networkmanager.enable = true;
 
     time.timeZone = "America/New_York";
@@ -61,7 +47,6 @@
         variant = "";
     };
 
-
     # =========================================================================
     # User Account Space
     # =========================================================================
@@ -81,18 +66,17 @@
         };
     };
 
-    nixpkgs.config.allowUnfree = true;
+    nixpkgs.config.allowUnfree = false;
 
 
     # =========================================================================
     # Additional drive mounting
     # =========================================================================
-    fileSystems."/mnt/games" = {
-        device = "/dev/disk/by-uuid/a7b7277d-b66e-4290-b58f-48262370b9ea";
-        fsType = "ext4";
-        mountPoint = "/mnt/games";
-        options = [ "defaults" ];
-        neededForBoot = false;
+    fileSystems."/media" = {
+        device = "192.168.1.234:/mnt/user/data/media";
+        fsType = "nfs";
+        mountPoint = "/media";
+        options = [ "x-systemd.automount" "noauto" "x-systemd.idle-timeout=600" ];
     };
 
 
@@ -101,12 +85,12 @@
     # =========================================================================
     services.openssh = {
         enable = true;
-        ports = [ 8222 ];
+        ports = [ 8122 ];
         settings = {
             PasswordAuthentication = false;
             AllowUsers = null;
             UseDns = true;
-            X11Forwarding = true;
+            X11Forwarding = false;
             PermitRootLogin = "no";
         };
     };
@@ -118,5 +102,6 @@
         openFirewall = true;
     };
 
-    system.stateVersion = "24.11";
+  system.stateVersion = "25.11";
+
 }

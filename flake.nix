@@ -64,6 +64,14 @@
                         ./hosts/mirkwood/configuration.nix
                     ];
                 };
+
+                ## Jellyfin server
+                argonath = nixpkgs.lib.nixosSystem {
+                    specialArgs = { inherit inputs; };
+                    modules = sharedModules ++ [
+                        ./hosts/argonath/configuration.nix
+                    ];
+                };
             };
 
             # Expose home-manager modules externally if needed
