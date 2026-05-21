@@ -66,10 +66,10 @@
                 };
 
                 ## Jellyfin server
-                argonath = nixpkgs.lib.nixosSystem {
+                arnor = nixpkgs.lib.nixosSystem {
                     specialArgs = { inherit inputs; };
                     modules = sharedModules ++ [
-                        ./hosts/argonath/configuration.nix
+                        ./hosts/arnor/configuration.nix
                     ];
                 };
             };
