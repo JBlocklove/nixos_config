@@ -53,7 +53,7 @@
 	# =========================================================================
 	# User Account Space
 	# =========================================================================
-	services.getty.autologinUser = "jason";
+	# services.getty.autologinUser = "jason";
 
 	users.users.jason = {
 		isNormalUser = true;
