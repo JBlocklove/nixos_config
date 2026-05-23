@@ -79,7 +79,16 @@
 		device = "192.168.1.234:/mnt/user/data/media";
 		fsType = "nfs";
 		mountPoint = "/media";
-		options = [ "x-systemd.automount" "noauto" "x-systemd.idle-timeout=600" ];
+		options = [
+			"x-systemd.automount"
+			"noauto"
+			"x-systemd.idle-timeout=600"
+			"noatime"
+			"nodiratime"
+			"rsize=1048576"
+			"wsize=1048576"
+			"tcp"
+		];
 	};
 
 
