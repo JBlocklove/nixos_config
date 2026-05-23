@@ -123,7 +123,7 @@
             User = "jason";
             Type = "simple";
             # Using direct store path instead of an impure system path
-            ExecStart = "/run/current-system/sw/bin/noctalia-shell ipc call lockScreen lock";
+            ExecStart = "/etc/profiles/per-user/jason/bin/noctalia-shell ipc call lockScreen lock";
             ExecStartPost = "/run/current-system/sw/bin/sleep 0.3";
         };
 
