@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ config, pkgs, inputs, ... }:
 
 let
 	wmConfigs = ./configs/wm;
@@ -55,8 +55,9 @@ in {
 			recursive = true;
 		};
 
+		# manage noctalia out of nix store so the UI can write settings changes
 		".config/noctalia/" = {
-			source = "${wmConfigs}/noctalia";
+			source = config.lib.file.mkOutOfStoreSymlink "/home/jason/nixos/modules/home-manager/configs/wm/noctalia/";
 			recursive = true;
 		};
 
