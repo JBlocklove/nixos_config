@@ -142,7 +142,7 @@ bind <S-Insert> mode ignore
 bind <AC-Escape> mode ignore
 bind <AC-`> mode ignore
 bind <S-Escape> mode ignore
-bind <Escape> composite mode normal ; hidecmdline
+bind <Escape> composite mode normal ; hidecmdline ; nohlsearch
 bind <C-[> composite mode normal ; hidecmdline
 bind a current_url bmark
 bind A bmark
@@ -160,7 +160,6 @@ bind <AS-ArrowUp><AS-ArrowUp><AS-ArrowDown><AS-ArrowDown><AS-ArrowLeft><AS-Arrow
 bind / fillcmdline find
 bind n findnext 1
 bind N findnext -1
-bind \q nohlsearch
 
 " For syntax highlighting see https://github.com/tridactyl/vim-tridactyl
 " vim: set filetype=tridactyl

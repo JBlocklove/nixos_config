@@ -1,69 +1,80 @@
 {
-	description = "Nixos config flake";
+    description = "JBlocklove's nixos config flake";
 
-	inputs = {
-		nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    inputs = {
+        ## Core functions
+        nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
-		home-manager = {
-			url = "github:nix-community/home-manager";
-			inputs.nixpkgs.follows = "nixpkgs";
-		};
+        home-manager = {
+            url = "github:nix-community/home-manager";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
 
-		firefox-addons = {
-			url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
-			inputs.nixpkgs.follows = "nixpkgs";
-		};
+        ## System-level additions
+        sops-nix = {
+            url = "github:Mic92/sops-nix";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
 
-		bannerVim = {
-			url = "github:JBlocklove/bannerVim";
-			# url = "path:/home/jason/repos/bannerVim";
-			flake = true;
-		};
+        nix-index-database = {
+            url = "github:nix-community/nix-index-database";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
 
-		hyprdynamicmonitors = {
-			url = "github:fiffeek/hyprdynamicmonitors";
-			flake = true;
-		};
+        ## User-space tools
+        firefox-addons = {
+            url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
 
-		sops-nix.url = "github:Mic92/sops-nix";
+        hyprdynamicmonitors = {
+            url = "github:fiffeek/hyprdynamicmonitors";
+            flake = true;
+        };
 
-		nix-index-database = {
-			url = "github:nix-community/nix-index-database";
-			inputs.nixpkgs.follows = "nixpkgs";
-		};
+        nix-neovim = {
+            url = "github:JBlocklove/nix-neovim";
+            # url = "path:/home/jason/repos/nix/nix-neovim";
+            flake = true;
+        };
+    };
 
-		noctalia = {
-			url = "github:JBlocklove/noctalia-shell";
-			inputs.nixpkgs.follows = "nixpkgs";
-		};
+    outputs = { self, nixpkgs, ... }@inputs:
+        let
+            ## Modules that will belong to every machine
+            sharedModules = [
+                inputs.home-manager.nixosModules.default
+                inputs.nix-index-database.nixosModules.default
+                ./hosts/common.nix
+            ];
+        in {
+            nixosConfigurations = {
+                ## Home desktop
+                fangorn = nixpkgs.lib.nixosSystem {
+                    specialArgs = { inherit inputs; };
+                    modules = sharedModules ++ [
+                        ./hosts/fangorn/configuration.nix
+                    ];
+                };
 
-	};
+                ## Main laptop
+                mirkwood = nixpkgs.lib.nixosSystem {
+                    specialArgs = { inherit inputs; };
+                    modules = sharedModules ++ [
+                        ./hosts/mirkwood/configuration.nix
+                    ];
+                };
 
-	outputs = { self, nixpkgs, home-manager, ... }@inputs:
-		let
-			system = "x86_64-linux";
-			pkgs = nixpkgs.legacyPackages.${system};
+                ## Jellyfin server
+                arnor = nixpkgs.lib.nixosSystem {
+                    specialArgs = { inherit inputs; };
+                    modules = sharedModules ++ [
+                        ./hosts/arnor/configuration.nix
+                    ];
+                };
+            };
 
-		in {
-			nixosConfigurations.fangorn = nixpkgs.lib.nixosSystem {
-				specialArgs = {inherit inputs;};
-				modules = [
-					./hosts/fangorn/configuration.nix
-					inputs.home-manager.nixosModules.default
-					inputs.nix-index-database.nixosModules.default
-				];
-			};
-
-			nixosConfigurations.mirkwood = nixpkgs.lib.nixosSystem {
-				specialArgs = {inherit inputs;};
-				modules = [
-					./hosts/mirkwood/configuration.nix
-					inputs.home-manager.nixosModules.default
-					inputs.nix-index-database.nixosModules.default
-					inputs.noctalia.nixosModules.default
-				];
-			};
-
-			homeManagerModules.default = ./modules/home-manager;
-		};
-	}
+            # Expose home-manager modules externally if needed
+            homeManagerModules.default = ./modules/home-manager;
+        };
+}
