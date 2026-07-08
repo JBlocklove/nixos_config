@@ -10,7 +10,8 @@
 		../../modules/home-manager/browser.nix
 		../../modules/home-manager/writing.nix
 		../../modules/home-manager/communication/chat.nix
-		../../modules/home-manager/communication/email.nix
+		# ../../modules/home-manager/communication/work-chat.nix
+		# ../../modules/home-manager/communication/email.nix
 		../../modules/home-manager/media/media-management.nix
 		../../modules/home-manager/media/music.nix
 		../../modules/home-manager/engineering/ece.nix

@@ -28,7 +28,7 @@ in
 
 	programs.zsh = {
 		enable  = true;
-		dotDir = "${config.xdg.configHome}/zsh";
+		dotDir = ".config/zsh";
 	};
 
 #######################################

@@ -9,9 +9,9 @@ in {
     # install packages  #
     #####################
 	home.packages = with pkgs; [
-        signal-desktop
-        vesktop
-        element-desktop
+		webcord # only need until vesktop fixes multiple user issue
+        slack
+        zoom-us
 	];
 }
 
