@@ -33,6 +33,7 @@
     # Enforce custom XDG directories
 	xdg = {
 		enable = true;
+		configHome = "${config.home.homeDirectory}/.config";
 		userDirs = {
 			enable = true;
 			setSessionVariables = true;
