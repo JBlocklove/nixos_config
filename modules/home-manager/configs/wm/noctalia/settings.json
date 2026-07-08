@@ -431,7 +431,7 @@
     },
     "idle": {
         "customCommands": "[]",
-        "enabled": true,
+        "enabled": false,
         "fadeDuration": 5,
         "lockCommand": "",
         "lockTimeout": 660,
@@ -649,7 +649,7 @@
         "favorites": [
         ],
         "fillColor": "#000000",
-        "fillMode": "stretch",
+        "fillMode": "crop",
         "hideWallpaperFilenames": false,
         "linkLightAndDarkWallpapers": true,
         "monitorDirectories": [

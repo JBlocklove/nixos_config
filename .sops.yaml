@@ -11,8 +11,3 @@ creation_rules:
     key_groups:
       - age:
         - *primary
-
-  - path_regex: modules/home-manager/configs/music/mopidy/mopidy.conf$
-    key_groups:
-      - age:
-        - *primary
