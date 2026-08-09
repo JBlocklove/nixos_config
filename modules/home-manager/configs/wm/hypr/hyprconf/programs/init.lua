@@ -1,0 +1,1 @@
+require( "hyprconf.programs.zoom" )

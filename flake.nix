@@ -5,6 +5,8 @@
         ## Core functions
         nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
+		nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-26.05";
+
         home-manager = {
             url = "github:nix-community/home-manager";
             inputs.nixpkgs.follows = "nixpkgs";
@@ -27,16 +29,22 @@
             inputs.nixpkgs.follows = "nixpkgs";
         };
 
-        hyprdynamicmonitors = {
-            url = "github:fiffeek/hyprdynamicmonitors";
-            flake = true;
-        };
+        # hyprdynamicmonitors = {
+        #     url = "github:fiffeek/hyprdynamicmonitors";
+        #     flake = true;
+        # };
 
         nix-neovim = {
             url = "github:JBlocklove/nix-neovim";
             # url = "path:/home/jason/repos/nix/nix-neovim";
             flake = true;
         };
+
+		noctalia = {
+			url = "github:noctalia-dev/noctalia";
+			inputs.nixpkgs.follows = "nixpkgs";
+			# flake = true;
+		};
     };
 
     outputs = { self, nixpkgs, ... }@inputs:

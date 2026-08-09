@@ -8,5 +8,10 @@
     environment.systemPackages = with pkgs; [
         gparted
     ];
+
+	programs.fuse = {
+		enable = true;
+		userAllowOther = true;
+	};
 }
 

@@ -13,7 +13,7 @@ in {
 
 	home.packages = with pkgs; [
         # Hypr
-		hyprland
+		# hyprland
         hypridle
         hyprcursor
 
@@ -24,6 +24,7 @@ in {
 
         # Bar and a bunch of other stuff
         noctalia-shell
+		inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
 
         # Util
         wl-clipboard
@@ -34,14 +35,19 @@ in {
 		rofiScripts
 
         # Monitor switching
-		inputs.hyprdynamicmonitors.packages.${pkgs.stdenv.hostPlatform.system}.default
+		# inputs.hyprdynamicmonitors.packages.${pkgs.stdenv.hostPlatform.system}.default
+		hyprmoncfg
         wdisplays
+
+		# Screen sharing
+		# xwaylandvideobridge
 		
 	];
 
 	home.file = {
 		".config/hypr/" = {
-			source = "${wmConfigs}/hypr";
+			# source = config.lib.file.mkOutOfStoreSymlink "${wmConfigs}/hypr";
+			source = config.lib.file.mkOutOfStoreSymlink "/home/jason/nixos/modules/home-manager/configs/wm/hypr/";
 			recursive = true;
 		};
 

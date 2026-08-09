@@ -27,7 +27,10 @@
     programs.nix-index-database.comma.enable = true;
 
     # System security setup
-    programs.gnupg.agent.enable = true;
+    programs.gnupg.agent = {
+		enable = true;
+		pinentryPackage = pkgs.pinentry-rofi;
+	};
     services.passSecretService.enable = true;
 
     # Stuff to attempt to run unpatched dynamic binaries
@@ -35,5 +38,10 @@
         enable = true;
         libraries = with pkgs; [ glibc libgcc ];
     };
+
+	# nixpkgs.overlays = [
+	# 	# ( import ../modules/overlays/pdal.nix )
+	# 	( import ../modules/overlays/freecad-pinned.nix inputs )
+	# ];
 
 }

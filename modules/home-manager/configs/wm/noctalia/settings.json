@@ -45,7 +45,7 @@
         "backgroundOpacity": 0,
         "barType": "simple",
         "capsuleColorKey": "none",
-        "capsuleOpacity": 0.9,
+        "capsuleOpacity": 0.75,
         "contentPadding": 2,
         "density": "default",
         "displayMode": "always_visible",
@@ -643,7 +643,7 @@
     },
     "wallpaper": {
         "automationEnabled": true,
-        "directory": "/home/jason/pictures/wallpapers",
+        "directory": "/home/jason/pictures/wallpapers/desktop_wallpapers",
         "enableMultiMonitorDirectories": false,
         "enabled": true,
         "favorites": [

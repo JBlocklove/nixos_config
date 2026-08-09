@@ -11,7 +11,7 @@
         ../../modules/nixos/hardware/storage.nix
 
         ## Window manager setup
-        ../../modules/nixos/wm/hyprland.nix
+        ../../modules/nixos/wm.nix
 
         ## Additional nixos modules
         ../../modules/nixos/fonts.nix
