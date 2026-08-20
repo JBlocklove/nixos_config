@@ -7,8 +7,8 @@ local ultraMod = "SUPER + CTRL + SHIFT"
 hl.bind(mainMod .. " + D", hl.dsp.exec_cmd(MENU))
 hl.bind(mainMod .. " + S", hl.dsp.exec_cmd("rofi -show ssh"))
 hl.bind(modCtrl .. " + E", hl.dsp.exec_cmd("rofi -show power -modes 'power:rofi_power'"))
-hl.bind(mainMod .. " + F11", hl.dsp.exec_cmd("rofi -show mount -modes 'power:rofi_mount'"))
-hl.bind(mainMod .. " + F12", hl.dsp.exec_cmd("rofi -show unmount -modes 'power:rofi_unmount'"))
+hl.bind(mainMod .. " + F11", hl.dsp.exec_cmd("rofi -show mount -modes 'mount:rofi_mount'"))
+hl.bind(mainMod .. " + F12", hl.dsp.exec_cmd("rofi -show unmount -modes 'unmount:rofi_unmount'"))
 hl.bind(modShift .. " + P", hl.dsp.exec_cmd("rofi -show pass -modes 'pass:rofi_pass'"))
 
 -- Launch programs
@@ -17,7 +17,7 @@ hl.bind(mainMod .. " + I", hl.dsp.exec_cmd(BROWSER))
 hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("foot -c $HOME/.config/foot/float.ini"))
 hl.bind(mainMod .. " + C", hl.dsp.exec_cmd("foot -c $HOME/.config/foot/float.ini -e ikhal"))
 hl.bind(mainMod .. " + U", hl.dsp.exec_cmd("foot -c $HOME/.config/foot/float.ini -e ranger"))
-hl.bind(mainMod .. " + N", hl.dsp.exec_cmd("foot -c $HOME/.config/foot/float.ini --workding-directory=$HOME/nixos"))
+hl.bind(mainMod .. " + N", hl.dsp.exec_cmd("foot -c $HOME/.config/foot/float.ini --working-directory=$HOME/nixos"))
 
 hl.bind(mainMod .. " + Print", hl.dsp.exec_cmd("noctalia msg screenshot-region"))
 
@@ -25,7 +25,7 @@ hl.bind(mainMod .. " + Print", hl.dsp.exec_cmd("noctalia msg screenshot-region")
 hl.bind(modCtrl .. " + R", hl.dsp.exec_cmd("hyprctl reload"))
 hl.bind(modShift .. " + Q", hl.dsp.window.close())
 
-hl.bind("CTRL + SHIFT + L", hl.dsp.exec_cmd("noctalia msg session lock"))
+hl.bind("CTRL + ALT + L", hl.dsp.exec_cmd("noctalia msg session lock"))
 
 -- Window controls
 hl.bind(mainMod .. " + H", hl.dsp.focus({ direction = "left" }))
@@ -33,10 +33,10 @@ hl.bind(mainMod .. " + J", hl.dsp.focus({ direction = "down" }))
 hl.bind(mainMod .. " + K", hl.dsp.focus({ direction = "up" }))
 hl.bind(mainMod .. " + L", hl.dsp.focus({ direction = "right" }))
 
--- hl.bind(modShift .. " + H", hl.dsp.window.resize({ -50, 0, relative = true }))
--- hl.bind(modShift .. " + J", hl.dsp.window.resize({ 0, 50, relative = true }))
--- hl.bind(modShift .. " + K", hl.dsp.window.resize({ 0, -50, relative = true }))
--- hl.bind(modShift .. " + L", hl.dsp.window.resize({ 50, 0, relative = true }))
+hl.bind(modShift .. " + H", hl.dsp.window.resize({ x = -50, y = 0, relative = true }))
+hl.bind(modShift .. " + J", hl.dsp.window.resize({ x = 0, y = 50, relative = true }))
+hl.bind(modShift .. " + K", hl.dsp.window.resize({ x = 0, y = -50, relative = true }))
+hl.bind(modShift .. " + L", hl.dsp.window.resize({ x = 50, y = 0, relative = true }))
 
 hl.bind(modCtrl .. " + H", hl.dsp.window.move({ direction = "left" }))
 hl.bind(modCtrl .. " + J", hl.dsp.window.move({ direction = "down" }))
@@ -45,7 +45,9 @@ hl.bind(modCtrl .. " + L", hl.dsp.window.move({ direction = "right" }))
 
 hl.bind(modShift .. " + space", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. "+ F", hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }))
-hl.bind(modShift .. "+ F", hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }))
+hl.bind(modShift .. " + F", hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }))
+
+hl.bind(mainMod .. " + Tab", hl.dsp.window.cycle_next({ floating = true, tiled = true }))
 
 -- Workspace controls
 for i = 1, 10 do
@@ -56,8 +58,8 @@ for i = 1, 10 do
 end
 hl.bind(mainMod .. " + minus", hl.dsp.focus({ workspace = 11 }))
 hl.bind(mainMod .. " + equal", hl.dsp.focus({ workspace = 12 }))
-hl.bind(mainMod .. " + minus", hl.dsp.window.move({ workspace = 11, follow = false }))
-hl.bind(mainMod .. " + equal", hl.dsp.window.move({ workspace = 12, follow = false }))
+hl.bind(modShift .. " + minus", hl.dsp.window.move({ workspace = 11, follow = false }))
+hl.bind(modShift .. " + equal", hl.dsp.window.move({ workspace = 12, follow = false }))
 hl.bind(ultraMod .. " + minus", hl.dsp.window.move({ workspace = 11 }))
 hl.bind(ultraMod .. " + equal", hl.dsp.window.move({ workspace = 12 }))
 

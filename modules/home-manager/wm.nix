@@ -16,6 +16,7 @@ in {
 		# hyprland
         hypridle
         hyprcursor
+		hyprshutdown
 
         # Theming
         nwg-look
@@ -23,7 +24,7 @@ in {
         catppuccin-cursors.mochaDark
 
         # Bar and a bunch of other stuff
-        noctalia-shell
+        # noctalia-shell
 		inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
 
         # Util
@@ -38,21 +39,17 @@ in {
 		# inputs.hyprdynamicmonitors.packages.${pkgs.stdenv.hostPlatform.system}.default
 		hyprmoncfg
         wdisplays
-
-		# Screen sharing
-		# xwaylandvideobridge
-		
 	];
 
 	home.file = {
 		".config/hypr/" = {
-			# source = config.lib.file.mkOutOfStoreSymlink "${wmConfigs}/hypr";
-			source = config.lib.file.mkOutOfStoreSymlink "/home/jason/nixos/modules/home-manager/configs/wm/hypr/";
+			source = "${wmConfigs}/hypr";
 			recursive = true;
 		};
 
-		".config/hyprdynamicmonitors/" = {
-			source = "${wmConfigs}/hyprdynamicmonitors";
+		".config/hyprmoncfg/" = {
+			# source = "${wmConfigs}/hyprmoncfg";
+			source = config.lib.file.mkOutOfStoreSymlink "/home/jason/nixos/modules/home-manager/configs/wm/hyprmoncfg/";
 			recursive = true;
 		};
 

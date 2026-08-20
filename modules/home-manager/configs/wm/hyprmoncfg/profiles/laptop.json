@@ -1,0 +1,41 @@
+{
+  "name": "laptop",
+  "created_at": "2026-08-09T12:14:43.818473013Z",
+  "updated_at": "2026-08-09T12:14:43.81884933Z",
+  "outputs": [
+    {
+      "key": "boe|0x095f",
+      "match_key": "boe|0x095f",
+      "name": "eDP-1",
+      "description": "BOE 0x095F",
+      "make": "BOE",
+      "model": "0x095F",
+      "enabled": true,
+      "mode": "2256x1504@60.00Hz",
+      "width": 2256,
+      "height": 1504,
+      "refresh": 60,
+      "x": 4640,
+      "y": 0,
+      "scale": 1,
+      "transform": 0,
+      "bitdepth": 8,
+      "cm": "srgb",
+      "sdr_brightness": 1,
+      "sdr_saturation": 1,
+      "sdr_min_luminance": 0.2,
+      "sdr_max_luminance": 80,
+      "min_luminance": 0
+    }
+  ],
+  "workspaces": {
+    "enabled": false,
+    "strategy": "sequential",
+    "max_workspaces": 9,
+    "group_size": 3,
+    "monitor_order": [
+      "boe|0x095f"
+    ]
+  },
+  "exec": ""
+}

@@ -6,7 +6,7 @@ if [[ -z "$@" ]]; then
 else
 	power=$1
 	if [[ "$power" = "logout" ]]; then
-	    exec hyprctl dispatch exit
+	    exec hyprshutdown
 	elif [[ "$power" = "suspend" ]]; then
 	    exec systemctl suspend-then-hibernate
 	elif [[ "$power" = "hibernate" ]]; then
