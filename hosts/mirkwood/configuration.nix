@@ -21,7 +21,6 @@
 
 	nixpkgs.overlays = [
 		( import ../../modules/overlays/freecad-pinned.nix inputs )
-		( import ../../modules/overlays/zotero-pinned.nix inputs )
 	];
 
     # =========================================================================
