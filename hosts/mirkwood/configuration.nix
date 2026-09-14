@@ -19,6 +19,11 @@
         ../../modules/nixos/secrets.nix
     ];
 
+	nixpkgs.overlays = [
+		( import ../../modules/overlays/freecad-pinned.nix inputs )
+		( import ../../modules/overlays/zotero-pinned.nix inputs )
+	];
+
     # =========================================================================
     # Boot & Kernel Options
     # =========================================================================
@@ -144,4 +149,7 @@
     };
 
     system.stateVersion = "24.11";
+
+	security.audit.enable = true;
+	security.auditd.enable = true;
 }
