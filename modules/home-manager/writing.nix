@@ -1,12 +1,12 @@
 { pkgs, ... }: {
 
-	#####################
-	# install packages  #
-	#####################
-	home.packages = with pkgs; [
-		texliveFull
-		zathura
-		zotero
+    #####################
+    # install packages  #
+    #####################
+    home.packages = with pkgs; [
+        texliveFull
+        zathura
+        zotero
         libreoffice
-	];
+    ];
 }

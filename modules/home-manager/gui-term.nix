@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 let
-	termConfigs = ./configs/term;
+    termConfigs = ./configs/term;
 in
 {
     imports = [
@@ -11,20 +11,19 @@ in
     #####################
     # install packages  #
     #####################
-	home.packages = with pkgs; [
-		chafa
-		poppler-utils
-		foot
-	];
+    home.packages = with pkgs; [
+        chafa
+        poppler-utils
+        foot
+    ];
 
     #######################################
     # symlink config files into ~/.config #
     #######################################
-	home.file = {
-		".config/foot/" = {
-			source = "${termConfigs}/foot/";
-			recursive = true;
-		};
-	};
+    home.file = {
+        ".config/foot/" = {
+            source = "${termConfigs}/foot/";
+            recursive = true;
+        };
+    };
 }
-

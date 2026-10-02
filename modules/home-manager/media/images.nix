@@ -2,9 +2,8 @@
     #####################
     # install packages  #
     #####################
-	home.packages = with pkgs; [
+    home.packages = with pkgs; [
         gimp
         pinta
-	];
+    ];
 }
-

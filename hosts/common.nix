@@ -1,8 +1,10 @@
 { pkgs, inputs, ... }: {
 
     # Enabling things that probably shouldn't still be experimental...
-    nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
+    nix.settings.experimental-features = [
+        "nix-command"
+        "flakes"
+    ];
 
     # System-wide shell setup
     programs.zsh.enable = true;
@@ -28,20 +30,23 @@
 
     # System security setup
     programs.gnupg.agent = {
-		enable = true;
-		pinentryPackage = pkgs.pinentry-rofi;
-	};
+        enable = true;
+        pinentryPackage = pkgs.pinentry-rofi;
+    };
     services.passSecretService.enable = true;
 
     # Stuff to attempt to run unpatched dynamic binaries
     programs.nix-ld = {
         enable = true;
-        libraries = with pkgs; [ glibc libgcc ];
+        libraries = with pkgs; [
+            glibc
+            libgcc
+        ];
     };
 
-	# nixpkgs.overlays = [
-	# 	# ( import ../modules/overlays/pdal.nix )
-	# 	( import ../modules/overlays/freecad-pinned.nix inputs )
-	# ];
+    # nixpkgs.overlays = [
+    # 	# ( import ../modules/overlays/pdal.nix )
+    # 	( import ../modules/overlays/freecad-pinned.nix inputs )
+    # ];
 
 }

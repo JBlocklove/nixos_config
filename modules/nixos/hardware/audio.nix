@@ -8,13 +8,13 @@
         alsa.support32Bit = true;
         pulse.enable = true;
         jack.enable = true;
-		wireplumber.enable = true;
-		# Trying to force better handling of my microphone
-		extraConfig = {
-			pipewire = {
-				"default.clock.rate" = 48000;
-			};
-		};
+        wireplumber.enable = true;
+        # Trying to force better handling of my microphone
+        extraConfig = {
+            pipewire = {
+                "default.clock.rate" = 48000;
+            };
+        };
     };
 
     security.wrappers.noisetorch = {
@@ -24,10 +24,10 @@
         capabilities = "cap_sys_resource+ep";
     };
 
-	# Fixes noisetorch
-	systemd.user.services.pipewire-pulse.environment = {
-		LADSPA_PATH="/tmp:";
-	};
+    # Fixes noisetorch
+    systemd.user.services.pipewire-pulse.environment = {
+        LADSPA_PATH = "/tmp:";
+    };
 
     environment.systemPackages = with pkgs; [
         alsa-utils

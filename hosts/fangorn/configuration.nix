@@ -1,4 +1,9 @@
-{ config, pkgs, inputs, ... }:
+{
+    config,
+    pkgs,
+    inputs,
+    ...
+}:
 
 {
     imports = [
@@ -61,7 +66,6 @@
         variant = "";
     };
 
-
     # =========================================================================
     # User Account Space
     # =========================================================================
@@ -69,7 +73,14 @@
 
     users.users.jason = {
         isNormalUser = true;
-        extraGroups = [ "networkmanager" "wheel" "video" "audio" "dialout" "plugdev" ];
+        extraGroups = [
+            "networkmanager"
+            "wheel"
+            "video"
+            "audio"
+            "dialout"
+            "plugdev"
+        ];
     };
 
     home-manager = {
@@ -83,7 +94,6 @@
 
     nixpkgs.config.allowUnfree = true;
 
-
     # =========================================================================
     # Additional drive mounting
     # =========================================================================
@@ -94,7 +104,6 @@
         options = [ "defaults" ];
         neededForBoot = false;
     };
-
 
     # =========================================================================
     # Allow SSH remote access

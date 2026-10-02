@@ -1,17 +1,16 @@
 { config, pkgs, ... }:
 
 let
-	communicationConfigs = ../configs/communication;
-in {
-
+    communicationConfigs = ../configs/communication;
+in
+{
 
     #####################
     # install packages  #
     #####################
-	home.packages = with pkgs; [
+    home.packages = with pkgs; [
         signal-desktop
         vesktop
         element-desktop
-	];
+    ];
 }
-

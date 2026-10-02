@@ -13,7 +13,7 @@ hl.window_rule({
 		class = "zoom",
 		title = "annotate_toolbar",
 	},
-	float = false,
+	float = true,
 	no_anim = true,
 	no_focus = true,
 	no_shadow = true,

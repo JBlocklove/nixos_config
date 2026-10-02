@@ -1,15 +1,21 @@
-{ config, pkgs, lib, ... }:
+{
+    config,
+    pkgs,
+    lib,
+    ...
+}:
 let
-	mediaConfigs = ./configs/media;
+    mediaConfigs = ./configs/media;
 
-in {
-	#####################
-	# install packages  #
-	#####################
-	home.packages = with pkgs; [
-		calibre
-		vlc
-		unison
-		sshfs
-	];
+in
+{
+    #####################
+    # install packages  #
+    #####################
+    home.packages = with pkgs; [
+        calibre
+        vlc
+        unison
+        sshfs
+    ];
 }

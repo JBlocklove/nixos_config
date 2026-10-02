@@ -1,22 +1,28 @@
-{ config, pkgs, inputs, ... }:
+{
+    config,
+    pkgs,
+    inputs,
+    ...
+}:
 
 let
-	wmConfigs = ./configs/wm;
+    wmConfigs = ./configs/wm;
 
-	rofiScripts = pkgs.runCommand "rofi-scripts" {} ''
-		mkdir -p $out/bin
-		cp -r ${wmConfigs}/rofi/local/* $out/bin/
-		chmod +x $out/bin/*
-	'';
+    rofiScripts = pkgs.runCommand "rofi-scripts" { } ''
+        		mkdir -p $out/bin
+        		cp -r ${wmConfigs}/rofi/local/* $out/bin/
+        		chmod +x $out/bin/*
+        	'';
 
-in {
+in
+{
 
-	home.packages = with pkgs; [
+    home.packages = with pkgs; [
         # Hypr
-		# hyprland
+        # hyprland
         hypridle
         hyprcursor
-		hyprshutdown
+        hyprshutdown
 
         # Theming
         nwg-look
@@ -25,49 +31,48 @@ in {
 
         # Bar and a bunch of other stuff
         # noctalia-shell
-		inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
+        inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
 
         # Util
         wl-clipboard
         libnotify
 
         # Launcher
-		rofi
-		rofiScripts
+        rofi
+        rofiScripts
 
         # Monitor switching
-		# inputs.hyprdynamicmonitors.packages.${pkgs.stdenv.hostPlatform.system}.default
-		hyprmoncfg
+        # inputs.hyprdynamicmonitors.packages.${pkgs.stdenv.hostPlatform.system}.default
+        hyprmoncfg
         wdisplays
-	];
+    ];
 
-	home.file = {
-		".config/hypr/" = {
-			source = "${wmConfigs}/hypr";
-			recursive = true;
-		};
+    home.file = {
+        ".config/hypr/" = {
+            source = "${wmConfigs}/hypr";
+            recursive = true;
+        };
 
-		".config/hyprmoncfg/" = {
-			# source = "${wmConfigs}/hyprmoncfg";
-			source = config.lib.file.mkOutOfStoreSymlink "/home/jason/nixos/modules/home-manager/configs/wm/hyprmoncfg/";
-			recursive = true;
-		};
+        ".config/hyprmoncfg/" = {
+            # source = "${wmConfigs}/hyprmoncfg";
+            source = config.lib.file.mkOutOfStoreSymlink "/home/jason/nixos/modules/home-manager/configs/wm/hyprmoncfg/";
+            recursive = true;
+        };
 
-		".config/rofi/" = {
-			source = "${wmConfigs}/rofi/config";
-			recursive = true;
-		};
+        ".config/rofi/" = {
+            source = "${wmConfigs}/rofi/config";
+            recursive = true;
+        };
 
-		# manage noctalia out of nix store so the UI can write settings changes
-		".config/noctalia/" = {
-			source = config.lib.file.mkOutOfStoreSymlink "/home/jason/nixos/modules/home-manager/configs/wm/noctalia/";
-			recursive = true;
-		};
+        # manage noctalia out of nix store so the UI can write settings changes
+        ".config/noctalia/" = {
+            source = config.lib.file.mkOutOfStoreSymlink "/home/jason/nixos/modules/home-manager/configs/wm/noctalia/";
+            recursive = true;
+        };
 
         "pictures/wallpapers/" = {
             source = "${wmConfigs}/wallpapers";
             recursive = true;
         };
-	};
+    };
 }
-

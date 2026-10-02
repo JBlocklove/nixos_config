@@ -9,9 +9,8 @@
         gparted
     ];
 
-	programs.fuse = {
-		enable = true;
-		userAllowOther = true;
-	};
+    programs.fuse = {
+        enable = true;
+        userAllowOther = true;
+    };
 }
-

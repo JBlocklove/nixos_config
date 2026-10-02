@@ -5,9 +5,8 @@
     };
 
     environment.systemPackages = with pkgs; [
-		steam
-		# lutris
-		# heroic
+        steam
+        # lutris
+        # heroic
     ];
 }
-

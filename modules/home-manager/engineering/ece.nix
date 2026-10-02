@@ -1,13 +1,13 @@
 { pkgs, ... }: {
 
-#####################
-# install packages  #
-#####################
-	home.packages = with pkgs; [
+    #####################
+    # install packages  #
+    #####################
+    home.packages = with pkgs; [
         # HDL
         ghdl
         iverilog
-        verilator
+        # verilator
         sv-lang
         yosys
 
@@ -23,10 +23,6 @@
         avrdude
         minicom
 
-	];
+    ];
 
 }
-
-
-
-

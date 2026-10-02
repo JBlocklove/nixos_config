@@ -19,9 +19,10 @@
         ../../modules/nixos/secrets.nix
     ];
 
-	nixpkgs.overlays = [
-		( import ../../modules/overlays/freecad-pinned.nix inputs )
-	];
+    nixpkgs.overlays = [
+        (import ../../modules/overlays/freecad-pinned.nix inputs)
+        (import ../../modules/overlays/zotero-pinned.nix inputs)
+    ];
 
     # =========================================================================
     # Boot & Kernel Options
@@ -31,6 +32,8 @@
             systemd-boot.enable = true;
             efi.canTouchEfiVariables = true;
         };
+
+        kernelPackages = pkgs.linuxPackages_latest;
 
         # Hibernation resume partition (swap)
         kernelParams = [
@@ -47,8 +50,8 @@
 
     # Udev rules to work with thunderbolt dock
     services.udev.extraRules = ''
-    # Thunderbolt authorization
-    ACTION=="add", SUBSYSTEM=="thunderbolt", ATTR{authorized}=="0", ATTR{authorized}="1"
+        # Thunderbolt authorization
+        ACTION=="add", SUBSYSTEM=="thunderbolt", ATTR{authorized}=="0", ATTR{authorized}="1"
     '';
 
     # =========================================================================
@@ -84,7 +87,14 @@
 
     users.users.jason = {
         isNormalUser = true;
-        extraGroups = [ "networkmanager" "wheel" "video" "audio" "dialout" "plugdev" ];
+        extraGroups = [
+            "networkmanager"
+            "wheel"
+            "video"
+            "audio"
+            "dialout"
+            "plugdev"
+        ];
     };
 
     home-manager = {
@@ -114,8 +124,8 @@
         };
     };
 
-    systemd.sleep.settings.Sleep = { 
-        HibernateDelaySec = "15m"; 
+    systemd.sleep.settings.Sleep = {
+        HibernateDelaySec = "15m";
     };
 
     # Lock screen automatically before the laptop goes to sleep
@@ -148,7 +158,4 @@
     };
 
     system.stateVersion = "24.11";
-
-	security.audit.enable = true;
-	security.auditd.enable = true;
 }

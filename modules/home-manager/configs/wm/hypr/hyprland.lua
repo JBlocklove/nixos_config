@@ -8,6 +8,7 @@ BROWSER = "librewolf"
 -- Monitors, managed by hyprmoncfg
 require( "monitors" )
 
+require( "hyprconf/env" )
 require( "hyprconf/autostart" )
 require( "hyprconf/input" )
 require( "hyprconf/workspaces_windows" )
